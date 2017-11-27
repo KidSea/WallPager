@@ -1,8 +1,13 @@
-package com.example.yuxuehai.wallpager;
+package com.example.yuxuehai.wallpager.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.yuxuehai.wallpager.R;
+
+/**
+ * create by yuxuehai 2017-11-27
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
