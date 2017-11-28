@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.yuxuehai.wallpager.ui.MainActivity;
+import com.example.yuxuehai.wallpager.ui.SplashActivity;
 
 
 /**
@@ -17,7 +17,7 @@ import com.example.yuxuehai.wallpager.ui.MainActivity;
 
 public abstract class BaseFragment extends Fragment{
 
-    protected MainActivity mActivity;
+    protected SplashActivity mActivity;
     private View mMainView = null;
 
     protected abstract View createView(LayoutInflater inflater, ViewGroup container,
@@ -31,8 +31,8 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getActivity() instanceof MainActivity){
-            mActivity = (MainActivity)getActivity();
+        if(getActivity() instanceof SplashActivity){
+            mActivity = (SplashActivity)getActivity();
         }
 
     }
