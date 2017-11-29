@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.yuxuehai.wallpager.ui.SplashActivity;
 
+import butterknife.ButterKnife;
+
 
 /**
  * Created by yuxuehai on 17-11-27.
@@ -17,41 +19,54 @@ import com.example.yuxuehai.wallpager.ui.SplashActivity;
 
 public abstract class BaseFragment extends Fragment{
 
-    protected SplashActivity mActivity;
-    private View mMainView = null;
 
-    protected abstract View createView(LayoutInflater inflater, ViewGroup container,
-                                       Bundle savedInstanceState);
-
-    protected abstract void initView(View rootView);
-
-    protected abstract void initData();
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getActivity() instanceof SplashActivity){
-            mActivity = (SplashActivity)getActivity();
-        }
-
+        beforeSetView();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        if (mMainView == null || mMainView.getParent() != null) {
-            mMainView = createView(inflater, container, savedInstanceState);
-            initView(mMainView);
-            initData();
-        }
-        return mMainView;
+        View view = inflater.inflate(requestLayout(), container, false);
+        ButterKnife.bind(this,view);
+        return  view;
     }
 
-
-    protected Intent getIntent(){
-        return mActivity.getIntent();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+        initData();
     }
+
+    /**
+     * 设置布局前的初始化
+     */
+    protected void  beforeSetView(){}
+    /**
+     * 布局
+     * @return
+     */
+    public abstract int requestLayout();
+
+    /**
+     * View需要初始化的
+     */
+    protected  void initView(){}
+
+    /**
+     * 初始化数据
+     */
+    protected void initData(){}
+
+    /**
+     * 初始化ActionBar
+     */
+    protected void setActionBar(){}
+
 }

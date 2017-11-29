@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/drawer_home"
+              android:checked="true"
+              android:icon="@drawable/ic_home"
+              android:title="@string/drawer_home"/>
+        <!--  <item android:id="@+id/drawer_sort"
+                android:icon="@drawable/ic_sort"
+                android:title="@string/drawer_sort"/>-->
+        <item android:id="@+id/drawer_invoke_system"
+              android:icon="@drawable/ic_invoke_system_pager"
+              android:title="@string/drawer_invoke_system_page"
+        />
+        <item
+            android:id="@+id/drawer_photos_loaded"
+            android:icon="@drawable/ic_photos_loaded"
+            android:title="@string/drawer_photos_loaded"/>
+        <item
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/drawer_settings"/>
+        <item
+            android:id="@+id/drawer_about"
+            android:icon="@drawable/ic_about"
+            android:title="@string/drawer_about"
+        />
+    </group>
+
+
+</menu>

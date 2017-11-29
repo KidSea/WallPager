@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/mz_theme_color_seagreen</item>
         <item name="colorPrimaryDark">@color/mz_theme_color_seagreen</item>
@@ -15,14 +15,6 @@
         <item name="android:windowBackground">@mipmap/splashbg</item>
     </style>
 
-    <color name="mz_theme_color_blue">#198DED</color>
-    <color name="mz_theme_color_coral">#FFBE26</color>
-    <color name="mz_theme_color_crimson">#D33A2A</color>
-    <color name="mz_theme_color_firebrick">#F12528</color>
-    <color name="mz_theme_color_limegreen">#3BC06B</color>
-    <color name="mz_theme_color_grey">#7E97AC</color>
-    <color name="mz_theme_color_seagreen">#04C0CF</color>
-    <color name="mz_theme_color_tomato">#FC5B23</color>
 
 
 </resources>
