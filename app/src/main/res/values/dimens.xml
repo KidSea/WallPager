@@ -65,4 +65,5 @@
 
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="nav_header_layout_height">200dp</dimen>
+    <dimen name="tab_height">48dp</dimen>
 </resources>

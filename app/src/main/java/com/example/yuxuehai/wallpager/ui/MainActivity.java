@@ -1,20 +1,13 @@
 package com.example.yuxuehai.wallpager.ui;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.transition.ChangeImageTransform;
 import android.transition.Fade;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.yuxuehai.wallpager.R;
@@ -35,14 +28,10 @@ public class MainActivity extends BaseActivity implements MainView,
     DrawerLayout mDrawerLayout;
     @BindView(R.id.nav_menu)
     NavigationView mNavigationView;
-    @BindView(R.id.app_toolbar)
-    Toolbar mToolbar;
+
     private HomeFragment mHomeFragment;
-    private ActionBarDrawerToggle mDrawerToggle;
 
     private long exitTime;
-    private int mDrawerSelectedItem = -1;
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -95,14 +84,14 @@ public class MainActivity extends BaseActivity implements MainView,
     }
 
     @Override
-    protected int requestLayout() {
-        return R.layout.activity_main;
-    }
-
-    @Override
     protected void onBeforeSetContentView() {
         super.onBeforeSetContentView();
         getWindow().setEnterTransition(new Fade());
+    }
+
+    @Override
+    protected int requestLayout() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -121,33 +110,6 @@ public class MainActivity extends BaseActivity implements MainView,
         super.initData();
     }
 
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        mToolbar.setTitle(R.string.app_name);
-        mToolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.img_slide_menu);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleDrawer();
-            }
-        });
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-    }
-
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    private void initNavigationView() {
-        mNavigationView.setNavigationItemSelectedListener(this);
-    }
 
     private void initFragment() {
 
@@ -160,6 +122,9 @@ public class MainActivity extends BaseActivity implements MainView,
                 .commit();
     }
 
+    private void initNavigationView() {
+        mNavigationView.setNavigationItemSelectedListener(this);
+    }
 
 
 }
