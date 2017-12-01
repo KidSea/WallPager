@@ -13,4 +13,7 @@
     <color name="mz_theme_color_grey">#7E97AC</color>
     <color name="mz_theme_color_seagreen">#04C0CF</color>
     <color name="mz_theme_color_tomato">#FC5B23</color>
+
+    <color name="white">#ffffff</color>
+    <color name="title_white">#80ffffff</color>
 </resources>
