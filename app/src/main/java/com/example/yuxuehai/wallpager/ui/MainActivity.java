@@ -1,11 +1,16 @@
 package com.example.yuxuehai.wallpager.ui;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.transition.ChangeImageTransform;
 import android.transition.Fade;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -30,6 +35,7 @@ public class MainActivity extends BaseActivity implements MainView,
     NavigationView mNavigationView;
 
     private HomeFragment mHomeFragment;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private long exitTime;
 
@@ -61,6 +67,13 @@ public class MainActivity extends BaseActivity implements MainView,
     }
 
     @Override
+    public void setToolBar(Toolbar toolBar) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolBar,
+                R.string.open, R.string.close);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.drawer_home:
@@ -68,6 +81,7 @@ public class MainActivity extends BaseActivity implements MainView,
                 return true;
             case R.id.drawer_invoke_system:
                 Toast.makeText(this, "壁纸设置", Toast.LENGTH_SHORT).show();
+                Log.e("mainactivity", "壁纸设置");
                 break;
             case R.id.drawer_photos_loaded:
                 Toast.makeText(this, "下载管理", Toast.LENGTH_SHORT).show();
@@ -81,6 +95,12 @@ public class MainActivity extends BaseActivity implements MainView,
         }
         mDrawerLayout.closeDrawers();
         return false;
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     @Override

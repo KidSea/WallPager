@@ -49,6 +49,7 @@ public class HomeFragment extends BaseFragment {
         mToolbar.setTitle(R.string.app_name);
         mToolbar.setTitleTextColor(Color.WHITE);
         ((MainActivity)getActivity()).setSupportActionBar(mToolbar);
+        ((MainActivity)getActivity()).setToolBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.img_slide_menu);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

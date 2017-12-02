@@ -9,6 +9,13 @@
     tools:openDrawer="start">
 
 
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar"
+    />
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_menu"
         android:layout_width="match_parent"
@@ -17,13 +24,6 @@
         app:headerLayout="@layout/nav_header_layout"
         app:itemIconTint="@color/mz_theme_color_grey"
         app:menu="@menu/nav_menu"
-    />
-
-    <FrameLayout
-        android:id="@+id/fl_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/app_bar"
     />
 
 </android.support.v4.widget.DrawerLayout>

@@ -8,4 +8,6 @@
     <string name="drawer_about">关于</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="no_data">No Data...</string>
+    <string name="string_net_error">网络错误，请链接网络...</string>
 </resources>
