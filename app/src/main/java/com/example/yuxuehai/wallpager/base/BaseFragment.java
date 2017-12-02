@@ -53,7 +53,7 @@ public abstract class BaseFragment extends Fragment{
      * 布局
      * @return
      */
-    public abstract int requestLayout();
+    protected abstract int requestLayout();
 
     /**
      * View需要初始化的
