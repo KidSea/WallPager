@@ -1,6 +1,5 @@
 package com.example.yuxuehai.wallpager.ui.fragment;
 
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import com.example.yuxuehai.wallpager.base.BaseRecyclerAdapter;
 import com.example.yuxuehai.wallpager.base.MvpBaseFragment;
 import com.example.yuxuehai.wallpager.bean.UnsplashResult;
 import com.example.yuxuehai.wallpager.interfaces.OnLoadMoreListener;
+import com.example.yuxuehai.wallpager.interfaces.RecyclerViewScrollDetector;
 import com.example.yuxuehai.wallpager.presenter.DemoPresenter;
 import com.example.yuxuehai.wallpager.utils.LayoutUtils;
 import com.example.yuxuehai.wallpager.view.DemoView;
@@ -27,7 +27,7 @@ import butterknife.BindView;
  * Created by yuxuehai on 17-12-1.
  */
 
-public class DemoFragment extends MvpBaseFragment<DemoView,DemoPresenter> implements DemoView{
+public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> implements DemoView {
 
     private static final String TAG = DemoFragment.class.getSimpleName();
 
@@ -45,6 +45,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView,DemoPresenter> implem
 
     private PhotoesRecycleAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
+    private View mDecorView;
 
     @Override
     public int requestLayout() {
@@ -93,16 +94,16 @@ public class DemoFragment extends MvpBaseFragment<DemoView,DemoPresenter> implem
     @Override
     protected void initView() {
         super.initView();
-
+        mDecorView = getActivity().getWindow().getDecorView();
         setRefresh();
 
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mAdapter = new PhotoesRecycleAdapter(getContext(), true);
-        View loadView = LayoutUtils.inflate(getContext(),R.layout.load_loading_layout);
-        View loadErrorView = LayoutUtils.inflate(getContext(),R.layout.load_failed_layout);
-        View loadEndView = LayoutUtils.inflate(getContext(),R.layout.load_end_layout);
+        View loadView = LayoutUtils.inflate(getContext(), R.layout.load_loading_layout);
+        View loadErrorView = LayoutUtils.inflate(getContext(), R.layout.load_failed_layout);
+        View loadEndView = LayoutUtils.inflate(getContext(), R.layout.load_end_layout);
         mAdapter.setLoadingView(loadView);
         mAdapter.setLoadFailedView(loadErrorView);
         mAdapter.setLoadEndView(loadEndView);
@@ -118,6 +119,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView,DemoPresenter> implem
 
             }
         });
+        mRecyclerView.addOnScrollListener(mDetector);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setHasFixedSize(true);
@@ -140,17 +142,37 @@ public class DemoFragment extends MvpBaseFragment<DemoView,DemoPresenter> implem
         });
     }
 
-    private void loadMore() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.loadEnd();
-            }
-        },2000);
-    }
-
     @Override
     protected DemoPresenter createPresenter() {
         return new DemoPresenter(getContext());
     }
+
+    private RecyclerViewScrollDetector mDetector = new RecyclerViewScrollDetector() {
+        @Override
+        public void onScrollUp() {
+            hideSystemUI();
+        }
+
+        @Override
+        public void onScrollDown() {
+            showSystemUI();
+        }
+    };
+
+    private void showSystemUI() {
+        mDecorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    private void hideSystemUI() {
+        mDecorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+
 }
