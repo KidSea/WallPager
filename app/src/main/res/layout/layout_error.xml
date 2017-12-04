@@ -5,9 +5,9 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_marginTop="128dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="128dp">
 
         <ImageView
             android:id="@+id/iv_net_error"

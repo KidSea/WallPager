@@ -1,13 +1,10 @@
-package com.example.yuxuehai.wallpager.model.http;
+package com.example.yuxuehai.wallpager.model.dao;
 
 import com.example.yuxuehai.wallpager.bean.PhotoInfo;
 import com.example.yuxuehai.wallpager.bean.UnsplashResult;
 
 import java.util.List;
 
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**

@@ -8,6 +8,10 @@
     <string name="drawer_about">关于</string>
     <string name="open">open</string>
     <string name="close">close</string>
-    <string name="no_data">No Data...</string>
-    <string name="string_net_error">网络错误，请链接网络...</string>
+    <string name="no_data">No Data…</string>
+    <string name="string_net_error">网络错误，请链接网络…</string>
+    <string name="share_photo">share_photo</string>
+    <string name="string_no_more_data">没有更多数据了...</string>
+    <string name="string_load_error">加载失败，点我再试试？</string>
+    <string name="string_loading">努力加载中...</string>
 </resources>

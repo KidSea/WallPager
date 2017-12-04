@@ -4,10 +4,10 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
     <TextView
-        android:layout_marginTop="240dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="240dp"
         android:text="@string/no_data"
         android:textColor="@color/mz_theme_color_grey"
         android:textSize="@dimen/space_24"/>
