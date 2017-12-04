@@ -2,8 +2,6 @@ package com.example.yuxuehai.wallpager.base;
 
 import android.content.Context;
 
-import java.lang.ref.WeakReference;
-
 /**
  * Created by yuxuehai on 17-11-27.
  */
@@ -12,7 +10,7 @@ public abstract class BasePresenter<V> {
 
 
     private final Context mContext;
-    protected WeakReference<V> mViewRef;
+    protected V mViewRef;
 
     public BasePresenter(Context context) {
         mContext = context.getApplicationContext();
@@ -25,18 +23,17 @@ public abstract class BasePresenter<V> {
 
 
     public void attachView(V view) {
-        mViewRef = new WeakReference<>(view);
+        this.mViewRef = view;
     }
 
     public void detachView() {
         if (mViewRef != null) {
-            mViewRef.clear();
             mViewRef = null;
         }
     }
 
     protected V getView() {
-        return mViewRef.get();
+        return mViewRef;
     }
 
 }
