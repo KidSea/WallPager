@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.yuxuehai.wallpager.ui.fragment.DemoFragment;
-import com.example.yuxuehai.wallpager.utils.Constains;
+import com.example.yuxuehai.wallpager.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return Constains.DEFAULT_CHANNELS[position];
+        return Constants.DEFAULT_CHANNELS[position];
     }
 
     private void initFrgments() {

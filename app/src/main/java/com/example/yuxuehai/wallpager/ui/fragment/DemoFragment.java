@@ -1,30 +1,35 @@
 package com.example.yuxuehai.wallpager.ui.fragment;
 
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.yuxuehai.wallpager.R;
 import com.example.yuxuehai.wallpager.adapter.PhotoesRecycleAdapter;
-import com.example.yuxuehai.wallpager.base.BaseFragment;
+import com.example.yuxuehai.wallpager.base.BaseRecyclerAdapter;
+import com.example.yuxuehai.wallpager.base.MvpBaseFragment;
+import com.example.yuxuehai.wallpager.bean.UnsplashResult;
+import com.example.yuxuehai.wallpager.interfaces.OnLoadMoreListener;
+import com.example.yuxuehai.wallpager.presenter.DemoPresenter;
+import com.example.yuxuehai.wallpager.utils.LayoutUtils;
+import com.example.yuxuehai.wallpager.view.DemoView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by yuxuehai on 17-12-1.
  */
 
-public class DemoFragment extends BaseFragment {
+public class DemoFragment extends MvpBaseFragment<DemoView,DemoPresenter> implements DemoView{
+
+    private static final String TAG = DemoFragment.class.getSimpleName();
 
     @BindView(R.id.empty_layout)
     RelativeLayout mEmptyLayout;
@@ -47,14 +52,72 @@ public class DemoFragment extends BaseFragment {
     }
 
     @Override
+    public void showError(String msg) {
+        Log.d(TAG, msg);
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        mErrorLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setRefresh() {
+        mErrorLayout.setVisibility(View.GONE);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
+    }
+
+    @Override
+    public void hideRefresh() {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void refreshData(List<UnsplashResult> unsplashResults) {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mAdapter.addDatas(unsplashResults);
+    }
+
+    @Override
+    public void addMoreData(List<UnsplashResult> unsplashResults) {
+        mAdapter.setLoadMoreData(unsplashResults);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
-        mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setEnabled(false);
+
+        setRefresh();
 
         mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mAdapter = new PhotoesRecycleAdapter();
+        mAdapter = new PhotoesRecycleAdapter(getContext(), true);
+        View loadView = LayoutUtils.inflate(getContext(),R.layout.load_loading_layout);
+        View loadErrorView = LayoutUtils.inflate(getContext(),R.layout.load_failed_layout);
+        View loadEndView = LayoutUtils.inflate(getContext(),R.layout.load_end_layout);
+        mAdapter.setLoadingView(loadView);
+        mAdapter.setLoadFailedView(loadErrorView);
+        mAdapter.setLoadEndView(loadEndView);
+        mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(boolean isReload) {
+                mPresenter.loadMorePhotoes();
+            }
+        });
+        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, Object data) {
+
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setHasFixedSize(true);
@@ -63,46 +126,31 @@ public class DemoFragment extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
-
-        getData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<String>>() {
-                    @Override
-                    public void onCompleted() {
-                        Toast.makeText(getActivity(), "Got the list!", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getActivity(), "Something went wrong!",
-                                Toast.LENGTH_SHORT).show();
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        mErrorLayout.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onNext(ArrayList<String> strings) {
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        mAdapter.addDatas(strings);
-                    }
-                });
+        mPresenter.getRecentPhotos();
     }
 
-
-    private Observable<ArrayList<String>> getData(){
-        return Observable.create(new Observable.OnSubscribe<ArrayList<String>>() {
-
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void call(Subscriber<? super ArrayList<String>> subscriber) {
-                ArrayList<String> mArrayList = new ArrayList<String>();
-                for (int i = 0; i < 20; i++){
-                    String name = "item " + i;
-                    mArrayList.add(name);
-                }
-                subscriber.onNext(mArrayList);
+            public void onRefresh() {
+                mPresenter.getRecentPhotos();
             }
         });
+    }
+
+    private void loadMore() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.loadEnd();
+            }
+        },2000);
+    }
+
+    @Override
+    protected DemoPresenter createPresenter() {
+        return new DemoPresenter(getContext());
     }
 }

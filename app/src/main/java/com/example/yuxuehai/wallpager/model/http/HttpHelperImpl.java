@@ -3,6 +3,7 @@ package com.example.yuxuehai.wallpager.model.http;
 import com.example.yuxuehai.wallpager.bean.PhotoInfo;
 import com.example.yuxuehai.wallpager.bean.UnsplashResult;
 import com.example.yuxuehai.wallpager.model.api.WallPagerApis;
+import com.example.yuxuehai.wallpager.model.dao.HttpHelper;
 
 import java.util.List;
 

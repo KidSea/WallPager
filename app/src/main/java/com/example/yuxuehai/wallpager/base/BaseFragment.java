@@ -1,14 +1,11 @@
 package com.example.yuxuehai.wallpager.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.yuxuehai.wallpager.ui.SplashActivity;
 
 import butterknife.ButterKnife;
 
@@ -42,6 +39,7 @@ public abstract class BaseFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         initView();
         initData();
+        initListener();
         setActionBar();
     }
 
@@ -64,7 +62,10 @@ public abstract class BaseFragment extends Fragment{
      * 初始化数据
      */
     protected void initData(){}
-
+    /**
+     * 初始化事件监听
+     */
+    protected void initListener(){}
     /**
      * 初始化ActionBar
      */
