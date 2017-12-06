@@ -19,16 +19,14 @@ public abstract class MvpBaseFragment<V,T extends BasePresenter<V>> extends Base
 
         //创建Presenter
         mPresenter = createPresenter();
-        //关联View
-        mPresenter.attachView((V) this);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         if(mPresenter != null){
             mPresenter.attachView((V)this);
         }
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

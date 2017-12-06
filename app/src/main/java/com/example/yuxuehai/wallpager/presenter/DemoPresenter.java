@@ -1,7 +1,9 @@
 package com.example.yuxuehai.wallpager.presenter;
 
 import android.content.Context;
+import android.view.View;
 
+import com.example.yuxuehai.wallpager.R;
 import com.example.yuxuehai.wallpager.base.BasePresenter;
 import com.example.yuxuehai.wallpager.bean.UnsplashResult;
 import com.example.yuxuehai.wallpager.model.NetModel;
@@ -13,6 +15,7 @@ import com.example.yuxuehai.wallpager.view.DemoView;
 import java.util.List;
 
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -50,7 +53,13 @@ public class DemoPresenter extends BasePresenter<DemoView> implements DemoPresen
                 Constants.NUM_PER_PAGE,Constants.ORDER_BY_LATEST)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<UnsplashResult>>() {
+                .subscribe(new Subscriber<List<UnsplashResult>>() {
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        getView().setRefresh();
+                    }
+
                     @Override
                     public void onCompleted() {
                     }
@@ -67,16 +76,19 @@ public class DemoPresenter extends BasePresenter<DemoView> implements DemoPresen
                     @Override
                     public void onNext(List<UnsplashResult> unsplashResults) {
                         mPage = 1;
-                        mPage++;
-                        getView().hideRefresh();
-                        getView().refreshData(unsplashResults);
+                        if(unsplashResults.isEmpty()){
+                            getView().setNoDataView();
+                        }else {
+                            getView().hideRefresh();
+                            getView().refreshData(unsplashResults);
+                        }
                     }
                 });
     }
 
     @Override
     public void loadMorePhotoes() {
-        mNetModel.getHttpHelper().getRecentPhotos(Constants.UNSPLASH_APP_KEY,mPage,
+        mNetModel.getHttpHelper().getRecentPhotos(Constants.UNSPLASH_APP_KEY,++mPage,
                 Constants.NUM_PER_PAGE,Constants.ORDER_BY_LATEST)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -90,14 +102,27 @@ public class DemoPresenter extends BasePresenter<DemoView> implements DemoPresen
                         if (getView() == null) {
                             return;
                         }
-                        getView().showError(e.getMessage());
+                        getView().loadMoreError();
                     }
 
                     @Override
                     public void onNext(List<UnsplashResult> unsplashResults) {
-                        mPage++;
-                        getView().addMoreData(unsplashResults);
+                        if (unsplashResults.isEmpty()){
+                            getView().loadMoreEnd();
+                        }else {
+                            getView().addMoreData(unsplashResults);
+                        }
                     }
                 });
+    }
+
+    @Override
+    public void setClickEvent(View view) {
+        int id = view.getId();
+        switch (id){
+            case R.id.fb_totop:
+                getView().rollToTop();
+                break;
+        }
     }
 }

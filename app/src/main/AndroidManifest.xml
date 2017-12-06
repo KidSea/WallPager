@@ -35,6 +35,10 @@
                   android:launchMode="singleTask"
                   android:screenOrientation="portrait"/>
 
+        <!--Glide-->
+        <meta-data android:name="com.example.yuxuehai.wallpager.utils.GlideConfigure"
+                   android:value="GlideModule"/>
+
     </application>
 
 </manifest>

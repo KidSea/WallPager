@@ -15,5 +15,10 @@ public interface DemoView extends BaseView {
     void hideRefresh();
     void refreshData(List<UnsplashResult> unsplashResults);
     void addMoreData(List<UnsplashResult> unsplashResults);
+    void setNoDataView();
 
+    void loadMoreError();
+    void loadMoreEnd();
+
+    void rollToTop();
 }

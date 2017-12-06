@@ -1,5 +1,6 @@
 package com.example.yuxuehai.wallpager.ui.fragment;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,7 @@ import butterknife.BindView;
  * Created by yuxuehai on 17-12-1.
  */
 
-public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> implements DemoView {
+public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> implements DemoView,View.OnClickListener {
 
     private static final String TAG = DemoFragment.class.getSimpleName();
 
@@ -41,6 +42,8 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycle_layout)
     RecyclerView mRecyclerView;
+    @BindView(R.id.fb_totop)
+    FloatingActionButton mActionButton;
 
 
     private PhotoesRecycleAdapter mAdapter;
@@ -57,11 +60,15 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
         Log.d(TAG, msg);
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
         mErrorLayout.setVisibility(View.VISIBLE);
+        mEmptyLayout.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
+        mActionButton.setVisibility(View.GONE);
     }
 
     @Override
     public void setRefresh() {
         mErrorLayout.setVisibility(View.GONE);
+        mEmptyLayout.setVisibility(View.GONE);
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -83,6 +90,8 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     @Override
     public void refreshData(List<UnsplashResult> unsplashResults) {
         mRecyclerView.setVisibility(View.VISIBLE);
+        mErrorLayout.setVisibility(View.GONE);
+        mEmptyLayout.setVisibility(View.GONE);
         mAdapter.addDatas(unsplashResults);
     }
 
@@ -92,10 +101,37 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     }
 
     @Override
+    public void setNoDataView() {
+        mEmptyLayout.setVisibility(View.VISIBLE);
+        mErrorLayout.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
+        mActionButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void loadMoreError() {
+        mAdapter.loadFailed();
+    }
+
+    @Override
+    public void loadMoreEnd() {
+        mAdapter.loadEnd();
+    }
+
+    @Override
+    public void rollToTop() {
+        mRecyclerView.scrollToPosition(0);
+    }
+
+    @Override
+    public void onClick(View view) {
+        mPresenter.setClickEvent(view);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
         mDecorView = getActivity().getWindow().getDecorView();
-        setRefresh();
 
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -120,6 +156,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
             }
         });
         mRecyclerView.addOnScrollListener(mDetector);
+        mRecyclerView.setItemViewCacheSize(25);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setHasFixedSize(true);
@@ -140,6 +177,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
                 mPresenter.getRecentPhotos();
             }
         });
+        mActionButton.setOnClickListener(this);
     }
 
     @Override
