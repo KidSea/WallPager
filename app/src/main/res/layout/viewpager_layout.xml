@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -19,6 +20,21 @@
                 android:layout_height="match_parent"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fb_totop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/space_32"
+            android:layout_marginBottom="@dimen/space_32"
+            android:backgroundTint="@color/mz_theme_color_seagreen"
+            android:src="@drawable/ic_arrow_upward_black_24dp"
+            app:fabSize="mini"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+        />
     </RelativeLayout>
 
     <include
