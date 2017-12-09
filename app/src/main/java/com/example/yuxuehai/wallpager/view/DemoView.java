@@ -17,6 +17,7 @@ public interface DemoView extends BaseView {
     void addMoreData(List<UnsplashResult> unsplashResults);
     void setNoDataView();
 
+    void getData();
     void loadMoreError();
     void loadMoreEnd();
 

@@ -56,6 +56,13 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mRecyclerView != null) mRecyclerView.removeAllViews();
+
+    }
+
+    @Override
     public void showError(String msg) {
         Log.d(TAG, msg);
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
@@ -109,6 +116,11 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     }
 
     @Override
+    public void getData() {
+        mPresenter.getRecentPhotos();
+    }
+
+    @Override
     public void loadMoreError() {
         mAdapter.loadFailed();
     }
@@ -120,7 +132,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
 
     @Override
     public void rollToTop() {
-        mRecyclerView.scrollToPosition(0);
+        mRecyclerView.smoothScrollToPosition(0);
     }
 
     @Override
@@ -151,12 +163,12 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
         });
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position, Object data) {
+            public void onItemClick(int position, Object data, View view) {
 
             }
         });
         mRecyclerView.addOnScrollListener(mDetector);
-        mRecyclerView.setItemViewCacheSize(25);
+        mRecyclerView.setItemViewCacheSize(100);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setHasFixedSize(true);
@@ -165,7 +177,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getRecentPhotos();
+        getData();
     }
 
     @Override
@@ -174,10 +186,11 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getRecentPhotos();
+                getData();
             }
         });
         mActionButton.setOnClickListener(this);
+        mErrorLayout.setOnClickListener(this);
     }
 
     @Override
