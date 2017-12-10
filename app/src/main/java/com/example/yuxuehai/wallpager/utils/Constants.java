@@ -17,6 +17,8 @@ public class Constants {
     public static final String UNSPLASH_APP_KEY = "7c49a7f1505fe73ccb156537d0540524a85cf596c977e6350c6e26298cb4b6f8";
     public static final String ORDER_BY_LATEST = "latest";//最新的
 
+    public static final String UNSPLASH_RESULT = "unsplash_result";
+
     public static final String[] DEFAULT_CHANNELS = new String[]{"新作", "精选", "建筑", "饮食", "自然", "物品", "人物", "科技"};
 
     public static final int NUM_PER_PAGE = 20;

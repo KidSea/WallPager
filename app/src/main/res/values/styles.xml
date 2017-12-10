@@ -18,5 +18,17 @@
         <item name="android:windowBackground">@mipmap/splashbg</item>
     </style>
 
+    <!--照片信息的textview样式-->
+    <style name="PhotoAttrTextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="android:drawablePadding">@dimen/space_16</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/space_16</item>
+        <item name="android:clickable">false</item>
+        <item name="android:textColor">@color/grey_600</item>
+    </style>
+
 
 </resources>

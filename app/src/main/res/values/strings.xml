@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WallPager</string>
     <string name="splash_subject">给你更好的视觉体验</string>
+
     <string name="drawer_home">主页</string>
     <string name="drawer_invoke_system_page">壁纸设置（本地）</string>
     <string name="drawer_photos_loaded">下载管理</string>
@@ -8,10 +9,17 @@
     <string name="drawer_about">关于</string>
     <string name="open">open</string>
     <string name="close">close</string>
+
+
     <string name="no_data">No Data…</string>
     <string name="string_net_error">网络错误，请链接网络…</string>
     <string name="share_photo">share_photo</string>
     <string name="string_no_more_data">没有更多数据了...</string>
     <string name="string_load_error">加载失败，点我再试试？</string>
     <string name="string_loading">努力加载中...</string>
+    <string name="string_download">下载</string>
+
+    <string name="string_share">分享</string>
+    <string name="string_set_wallpager">设为壁纸</string>
+    <string name="string_photo_value">照片属性</string>
 </resources>

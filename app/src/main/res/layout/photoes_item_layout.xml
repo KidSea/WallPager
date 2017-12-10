@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/space_16"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
     app:cardCornerRadius="0dp"
     app:cardElevation="10dp">
 
