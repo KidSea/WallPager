@@ -16,4 +16,12 @@
 
     <color name="white">#ffffff</color>
     <color name="title_white">#80ffffff</color>
+
+    <color name="grey_700">#616161</color>
+    <color name="grey_600">#757575</color>
+    <color name="arrow_back_item_grey">#757575</color>
+    <color name="ripple_grey_background">#9E9E9E</color>
+    <color name="graywhite">#dddddd</color>
+    <color name="grey_200">#EEEEEE</color>
+
 </resources>

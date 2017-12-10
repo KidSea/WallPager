@@ -1,5 +1,8 @@
 package com.example.yuxuehai.wallpager.ui.fragment;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +20,8 @@ import com.example.yuxuehai.wallpager.bean.UnsplashResult;
 import com.example.yuxuehai.wallpager.interfaces.OnLoadMoreListener;
 import com.example.yuxuehai.wallpager.interfaces.RecyclerViewScrollDetector;
 import com.example.yuxuehai.wallpager.presenter.DemoPresenter;
+import com.example.yuxuehai.wallpager.ui.PhotoesDetailAcitivity;
+import com.example.yuxuehai.wallpager.utils.Constants;
 import com.example.yuxuehai.wallpager.utils.LayoutUtils;
 import com.example.yuxuehai.wallpager.view.DemoView;
 
@@ -53,6 +58,13 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     @Override
     public int requestLayout() {
         return R.layout.viewpager_layout;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mRecyclerView != null) mRecyclerView.removeAllViews();
+
     }
 
     @Override
@@ -109,6 +121,11 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     }
 
     @Override
+    public void getData() {
+        mPresenter.getRecentPhotos();
+    }
+
+    @Override
     public void loadMoreError() {
         mAdapter.loadFailed();
     }
@@ -120,7 +137,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
 
     @Override
     public void rollToTop() {
-        mRecyclerView.scrollToPosition(0);
+        mRecyclerView.smoothScrollToPosition(0);
     }
 
     @Override
@@ -151,12 +168,12 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
         });
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position, Object data) {
-
+            public void onItemClick(int position, Object data, View view) {
+                getIntoPhotoesDetail(position, (UnsplashResult)data, view);
             }
         });
         mRecyclerView.addOnScrollListener(mDetector);
-        mRecyclerView.setItemViewCacheSize(25);
+        mRecyclerView.setItemViewCacheSize(100);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setHasFixedSize(true);
@@ -165,7 +182,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getRecentPhotos();
+        getData();
     }
 
     @Override
@@ -174,10 +191,11 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getRecentPhotos();
+                getData();
             }
         });
         mActionButton.setOnClickListener(this);
+        mErrorLayout.setOnClickListener(this);
     }
 
     @Override
@@ -212,5 +230,17 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
+    private void getIntoPhotoesDetail(int position, UnsplashResult data, View view){
+        Intent intent = new Intent(getContext(), PhotoesDetailAcitivity.class);
+        intent.putExtra(Constants.UNSPLASH_RESULT, data);
+        if(Build.VERSION.SDK_INT >= 22){
+            getActivity().startActivity(intent, ActivityOptions
+                    .makeSceneTransitionAnimation(getActivity(), view, getActivity()
+                            .getResources().getString(R.string.share_photo)).toBundle());
+        }else {
+            getActivity().startActivity(intent);
+        }
+
+    }
 
 }

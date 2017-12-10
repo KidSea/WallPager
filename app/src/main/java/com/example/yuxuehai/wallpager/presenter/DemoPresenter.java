@@ -123,6 +123,9 @@ public class DemoPresenter extends BasePresenter<DemoView> implements DemoPresen
             case R.id.fb_totop:
                 getView().rollToTop();
                 break;
+            case R.id.error_layout:
+                getView().getData();
+                break;
         }
     }
 }

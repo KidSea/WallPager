@@ -98,6 +98,13 @@ public class MainActivity extends BaseActivity implements MainView,
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getSupportFragmentManager().beginTransaction()
+                .remove(mHomeFragment);
+    }
+
+    @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
