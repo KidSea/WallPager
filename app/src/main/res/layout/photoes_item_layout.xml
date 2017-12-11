@@ -52,13 +52,30 @@
                     android:id="@+id/author_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginRight="@dimen/space_16"
                     android:layout_toRightOf="@+id/author_name"
                     android:maxLines="1"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"/>
             </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_likes"
+                android:drawablePadding="@dimen/space_16"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"/>
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -53,14 +53,17 @@ public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, P
             viewHolder.mImagePager.setTag(data.getUrls().getRegular());
             viewHolder.mAuthorName.setText(data.getUser().getName());
             viewHolder.mAuthorLocation.setText(data.getUser().getLocation());
+            viewHolder.mLikes.setText(String.valueOf(data.getUser().getTotal_likes()));
         }
     }
 
     private void setAuthorInfor(final PhotoesViewHolder viewHolder) {
         if(viewHolder.mImagePager.getMeasuredHeight() < 300){
             viewHolder.mAuthorInfo.setVisibility(View.INVISIBLE);
+            viewHolder.mLikes.setVisibility(View.INVISIBLE);
         }else {
             viewHolder.mAuthorInfo.setVisibility(View.VISIBLE);
+            viewHolder.mLikes.setVisibility(View.VISIBLE);
         }
 
         viewHolder.mCantainer.getViewTreeObserver().
@@ -69,6 +72,7 @@ public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, P
             public void onGlobalLayout() {
                 if(viewHolder.mImagePager.getMeasuredHeight() > 300){
                     viewHolder.mAuthorInfo.setVisibility(View.VISIBLE);
+                    viewHolder.mLikes.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -82,6 +86,7 @@ public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, P
         private CircleImageView mAuthorHeader;
         private TextView mAuthorName;
         private TextView mAuthorLocation;
+        private TextView mLikes;
 
         public PhotoesViewHolder(View itemView) {
             super(itemView);
@@ -91,6 +96,7 @@ public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, P
             mAuthorHeader = (CircleImageView) itemView.findViewById(R.id.author_header);
             mAuthorName = (TextView) itemView.findViewById(R.id.author_name);
             mAuthorLocation = (TextView) itemView.findViewById(R.id.author_location);
+            mLikes = (TextView)itemView.findViewById(R.id.tv_likes);
         }
     }
 }
