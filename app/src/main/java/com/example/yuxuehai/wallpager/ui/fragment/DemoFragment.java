@@ -50,10 +50,17 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
     @BindView(R.id.fb_totop)
     FloatingActionButton mActionButton;
 
+    private int mPage = 1;
+    private String mChannel = null;
+
 
     private PhotoesRecycleAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
     private View mDecorView;
+
+    public DemoFragment(String channel){
+        mChannel = channel;
+    }
 
     @Override
     public int requestLayout() {
@@ -122,7 +129,9 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
 
     @Override
     public void getData() {
-        mPresenter.getRecentPhotos();
+        mPage = 1;
+        setRefresh();
+        mPresenter.requestDatas(mChannel, mPage);
     }
 
     @Override
@@ -163,7 +172,7 @@ public class DemoFragment extends MvpBaseFragment<DemoView, DemoPresenter> imple
         mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(boolean isReload) {
-                mPresenter.loadMorePhotoes();
+                mPresenter.requestDatas(mChannel, ++mPage);
             }
         });
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {

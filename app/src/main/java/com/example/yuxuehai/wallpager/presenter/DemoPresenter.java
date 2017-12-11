@@ -14,7 +14,6 @@ import com.example.yuxuehai.wallpager.view.DemoView;
 
 import java.util.List;
 
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -48,72 +47,346 @@ public class DemoPresenter extends BasePresenter<DemoView> implements DemoPresen
     }
 
     @Override
-    public void getRecentPhotos() {
-        mNetModel.getHttpHelper().getRecentPhotos(Constants.UNSPLASH_APP_KEY,1,
-                Constants.NUM_PER_PAGE,Constants.ORDER_BY_LATEST)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<UnsplashResult>>() {
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        getView().setRefresh();
-                    }
+    public void requestDatas(String channel, int page) {
 
-                    @Override
-                    public void onCompleted() {
-                    }
+        switch (channel){
+            case Constants.CHANNLE_NEW:
+                mNetModel.getHttpHelper().getRecentPhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE,Constants.ORDER_BY_LATEST)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (getView() == null) {
-                            return;
-                        }
-                        getView().hideRefresh();
-                        getView().showError(e.getMessage());
-                    }
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
 
-                    @Override
-                    public void onNext(List<UnsplashResult> unsplashResults) {
-                        mPage = 1;
-                        if(unsplashResults.isEmpty()){
-                            getView().setNoDataView();
-                        }else {
-                            getView().hideRefresh();
-                            getView().refreshData(unsplashResults);
-                        }
-                    }
-                });
-    }
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case Constants.CHANNLE_PICK:
+                mNetModel.getHttpHelper().getCuratedPhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE,Constants.ORDER_BY_LATEST)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
 
-    @Override
-    public void loadMorePhotoes() {
-        mNetModel.getHttpHelper().getRecentPhotos(Constants.UNSPLASH_APP_KEY,++mPage,
-                Constants.NUM_PER_PAGE,Constants.ORDER_BY_LATEST)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<UnsplashResult>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (getView() == null) {
-                            return;
-                        }
-                        getView().loadMoreError();
-                    }
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case Constants.CHANNLE_ARC:
+                mNetModel.getHttpHelper().getBuildingsPhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
 
-                    @Override
-                    public void onNext(List<UnsplashResult> unsplashResults) {
-                        if (unsplashResults.isEmpty()){
-                            getView().loadMoreEnd();
-                        }else {
-                            getView().addMoreData(unsplashResults);
-                        }
-                    }
-                });
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
+
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case Constants.CHANNLE_FOOD:
+                mNetModel.getHttpHelper().getFoodsPhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
+
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case Constants.CHANNLE_NATURE:
+                mNetModel.getHttpHelper().getNaturePhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
+
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case Constants.CHANNLE_GOOD:
+                mNetModel.getHttpHelper().getGoodsPhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
+
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case Constants.CHANNLE_PERSON:
+                mNetModel.getHttpHelper().getPersonPhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
+
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case Constants.CHANNLE_TECH:
+                mNetModel.getHttpHelper().getTechnologyPhotos(Constants.UNSPLASH_APP_KEY,page,
+                        Constants.NUM_PER_PAGE)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<List<UnsplashResult>>() {
+                            @Override
+                            public void onCompleted() {
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                if(page == 1){
+                                    getView().hideRefresh();
+                                    getView().showError(e.getMessage());
+                                }else {
+                                    getView().loadMoreError();
+                                }
+                            }
+
+                            @Override
+                            public void onNext(List<UnsplashResult> unsplashResults) {
+                                if(page == 1){
+                                    if(unsplashResults.isEmpty()){
+                                        getView().setNoDataView();
+                                    }else {
+                                        getView().hideRefresh();
+                                        getView().refreshData(unsplashResults);
+                                    }
+                                }else {
+                                    if (unsplashResults.isEmpty()){
+                                        getView().loadMoreEnd();
+                                    }else {
+                                        getView().addMoreData(unsplashResults);
+                                    }
+                                }
+                            }
+                        });
+                break;
+        }
     }
 
     @Override

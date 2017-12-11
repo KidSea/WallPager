@@ -11,9 +11,7 @@ public interface DemoPresenterDao {
 
     boolean hasNetWork();
 
-    void getRecentPhotos();
-
-    void loadMorePhotoes();
+    void requestDatas(String channel, int page);
 
     void setClickEvent(View view);
 }
