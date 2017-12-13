@@ -1,7 +1,9 @@
 package com.example.yuxuehai.wallpager.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.transition.Fade;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,6 +13,11 @@ import com.example.yuxuehai.wallpager.R;
 import com.example.yuxuehai.wallpager.base.BaseActivity;
 
 import butterknife.BindView;
+
+import static com.example.yuxuehai.wallpager.utils.PermissionUtils.REQUEST_CODE;
+import static com.example.yuxuehai.wallpager.utils.PermissionUtils.hasAllPermissionsGranted;
+import static com.example.yuxuehai.wallpager.utils.PermissionUtils.lacksPermissions;
+import static com.example.yuxuehai.wallpager.utils.PermissionUtils.permissions;
 
 
 /**
@@ -27,7 +34,6 @@ public class SplashActivity extends BaseActivity {
     @BindView(R.id.tv_subject)
     TextView mSubject;
 
-
     @Override
     public void onEnterAnimationComplete() {
         super.onEnterAnimationComplete();
@@ -39,21 +45,21 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
+            goToMain();
+        } else {
+            delayFinish();
+        }
+    }
+
+    @Override
     protected int requestLayout() {
         return R.layout.activity_splash;
     }
 
     @Override
     protected void initView() {
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                delayFinish();
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            }
-        },1500);
     }
 
     @Override
@@ -62,6 +68,9 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onBeforeSetContentView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && lacksPermissions(permissions)) {
+            requestPermissions(permissions, REQUEST_CODE);
+        }
 
         Fade fade = new Fade();
         fade.setDuration(500);
@@ -77,5 +86,16 @@ public class SplashActivity extends BaseActivity {
                 SplashActivity.this.finish();
             }
         }, 1000);
+    }
+
+    private void goToMain(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                delayFinish();
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        },1500);
     }
 }

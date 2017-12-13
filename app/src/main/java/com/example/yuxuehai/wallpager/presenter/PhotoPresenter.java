@@ -83,7 +83,7 @@ public class PhotoPresenter extends BasePresenter<PhotoView> implements PhotoPre
                 getView().finish();
                 break;
             case R.id.tv_download:
-
+                getView().startDownload();
                 break;
             case R.id.tv_share:
                 getView().sharePhotoes();

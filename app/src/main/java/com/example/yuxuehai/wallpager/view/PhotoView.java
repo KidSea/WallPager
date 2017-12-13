@@ -23,4 +23,6 @@ public interface PhotoView extends BaseView{
     void setWallPagerSuccess();
 
     void setWallPagerFail();
+
+    void startDownload();
 }
