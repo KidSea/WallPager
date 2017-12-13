@@ -14,9 +14,16 @@ import com.example.yuxuehai.wallpager.R;
 import com.example.yuxuehai.wallpager.base.MvpBaseFragment;
 import com.example.yuxuehai.wallpager.bean.PhotoInfo;
 import com.example.yuxuehai.wallpager.bean.UnsplashResult;
+import com.example.yuxuehai.wallpager.interfaces.LoadPhotoEvent;
 import com.example.yuxuehai.wallpager.presenter.PhotoPresenter;
+import com.example.yuxuehai.wallpager.service.PhotoLoadService;
+import com.example.yuxuehai.wallpager.utils.Constants;
 import com.example.yuxuehai.wallpager.utils.GlideUtils;
 import com.example.yuxuehai.wallpager.view.PhotoView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -58,6 +65,7 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if(mContainer != null){
             mContainer.removeAllViews();
             mContainer = null;
@@ -127,6 +135,16 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     }
 
     @Override
+    public void startDownload() {
+        Toast.makeText(getContext(), "图片后台下载中...", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), PhotoLoadService.class);
+        intent.setAction(Constants.SERVICE_ACTION);
+        intent.putExtra(Constants.PHOTO_LOAD_URL, mResult.getUrls().getRaw());
+        intent.putExtra(Constants.PHOTO_ID, mResult.getId());
+        getActivity().startService(intent);
+    }
+
+    @Override
     public void onClick(View view) {
         mPresenter.disPatchClickEvent(view);
     }
@@ -134,7 +152,7 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     @Override
     protected void beforeSetView() {
         super.beforeSetView();
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -175,6 +193,39 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     @Override
     protected PhotoPresenter createPresenter() {
         return mPresenter = new PhotoPresenter(getContext());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void updateLoadProgress(LoadPhotoEvent event) {
+        if (event == null || !event.getPhotoId().equals(mResult.getId())) return;
+        mProgressBar.animate()
+                .alpha(1)
+                .setDuration(300)
+                .start();
+        mProgressBar.setProgress(event.getProgress());
+        if (event.getProgress() == 100) {
+            mProgressBar.animate()
+                    .alpha(0)
+                    .setDuration(800)
+                    .start();
+            Toast.makeText(getContext(), event.getPhotoId() + "图片已下载", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handlerMessages(LoadPhotoEvent event) {
+        if (event != null && event.getPhotoId() != null){
+            if(event.getPhotoId().equals("exist")){
+                Toast.makeText(getContext(), "图片已存在", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        if (event != null && event.getMessage() != null){
+            if(event.getMessage().equals("error")){
+                Toast.makeText(getContext(), "请查看网络", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
     }
 
 }

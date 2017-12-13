@@ -22,7 +22,7 @@ public class GlideConfigure implements GlideModule{
 
     private static final String TAG = "MyGlideModule";
     private int mMemoryCacheSize = (int) Runtime.getRuntime().maxMemory() / 8;
-    private int mDiskCacheSize = 1024 * 1024 * 50;
+    private int mDiskCacheSize = 1024 * 1024 * 100;
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {

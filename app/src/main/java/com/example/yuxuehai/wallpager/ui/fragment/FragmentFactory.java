@@ -56,4 +56,11 @@ public class FragmentFactory {
 
         return fragment;
     }
+
+    public static void clearView(){
+        if(mFragmentMap != null){
+            mFragmentMap.clear();
+            mFragmentMap = null;
+        }
+    }
 }

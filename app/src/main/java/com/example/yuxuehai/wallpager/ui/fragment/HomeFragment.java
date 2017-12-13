@@ -42,6 +42,11 @@ public class HomeFragment extends BaseFragment {
         mTabLayout.setupWithViewPager(mHomeViewPager);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FragmentFactory.clearView();
+    }
 
     @Override
     protected void setActionBar() {
