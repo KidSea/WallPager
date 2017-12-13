@@ -60,6 +60,11 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && lacksPermissions(permissions)) {
+            requestPermissions(permissions, REQUEST_CODE);
+        }else {
+            goToMain();
+        }
     }
 
     @Override
@@ -68,9 +73,6 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onBeforeSetContentView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && lacksPermissions(permissions)) {
-            requestPermissions(permissions, REQUEST_CODE);
-        }
 
         Fade fade = new Fade();
         fade.setDuration(500);
