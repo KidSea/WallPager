@@ -10,11 +10,11 @@ import java.io.File;
 
 public class Constants {
     //path
-    public static final String PATH_DATA = WallPagerApplications.getInstance().getCacheDir().
+    public static final String PATH_DATA = WallPagerApplications.getContext().getCacheDir().
             getAbsolutePath() + File.separator + "data";
     public static final String PATH_CACHE = PATH_DATA + "/NetCache";
     public static final String UNSPLASH_MAIN_URL = "https://api.unsplash.com/";
-    public static final String UNSPLASH_APP_KEY = "7c49a7f1505fe73ccb156537d0540524a85cf596c977e6350c6e26298cb4b6f8";
+    public static final String UNSPLASH_APP_KEY = "eb54e3b9dc12b9e0862b028b646085355d20b3442fbdfca4633ca0f7b01ef9a6";
     public static final String ORDER_BY_LATEST = "latest";//最新的
 
     public static final String CHANNLE_NEW = "new";

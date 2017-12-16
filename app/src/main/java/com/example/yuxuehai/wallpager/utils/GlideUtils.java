@@ -37,7 +37,7 @@ public class GlideUtils {
      * @param imageView
      */
     public static void loadImgAutoHeight(Context context, String url, int placeHolder, int errorDrawable, final ImageView imageView){
-        Glide.with(WallPagerApplications.getInstance().getBaseContext())
+        Glide.with(WallPagerApplications.getContext())
                 .load(url)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -64,7 +64,7 @@ public class GlideUtils {
      */
     private static Bitmap zipBitmap(Bitmap bitmap, ImageView imageView){
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
-        int reqWid = ScreenUtils.getScreenWidth(WallPagerApplications.getInstance().getBaseContext());
+        int reqWid = ScreenUtils.getScreenWidth(WallPagerApplications.getContext());
         int rawWid = bitmap.getWidth();
         float scale = (float)reqWid / (float) rawWid;
         int reqHeight = (int)( bitmap.getHeight() * scale);

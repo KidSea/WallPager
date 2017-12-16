@@ -12,14 +12,14 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.yuxuehai.wallpager.R;
 import com.example.yuxuehai.wallpager.base.MvpBaseFragment;
-import com.example.yuxuehai.wallpager.bean.PhotoInfo;
-import com.example.yuxuehai.wallpager.bean.UnsplashResult;
-import com.example.yuxuehai.wallpager.interfaces.LoadPhotoEvent;
+import com.example.yuxuehai.wallpager.data.bean.PhotoInfo;
+import com.example.yuxuehai.wallpager.data.bean.UnsplashResult;
+import com.example.yuxuehai.wallpager.ui.interfaces.LoadPhotoEvent;
 import com.example.yuxuehai.wallpager.presenter.PhotoPresenter;
 import com.example.yuxuehai.wallpager.service.PhotoLoadService;
 import com.example.yuxuehai.wallpager.utils.Constants;
 import com.example.yuxuehai.wallpager.utils.GlideUtils;
-import com.example.yuxuehai.wallpager.view.PhotoView;
+import com.example.yuxuehai.wallpager.ui.view.PhotoView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -156,13 +156,13 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     }
 
     @Override
-    protected int requestLayout() {
+    protected int requestLayoutId() {
         return R.layout.fragment_photoes_layout;
     }
 
     @Override
-    protected void initView() {
-        super.initView();
+    protected void initView(View view) {
+        super.initView(view);
         mMaterialDialog = new MaterialDialog.Builder(getActivity()).build();
         mMaterialDialog.setCancelable(true);
         mMaterialDialog.setContent("正在为您的手机设置壁纸\n客官请骚等...");
@@ -178,6 +178,12 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     }
 
     @Override
+    protected void loadData() {
+        super.loadData();
+        mPresenter.getPhotoData(mResult.getId());
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         GlideUtils.loadImgAutoHeight(getContext(), mResult.getUrls().getRegular(), 0, 0, mPhoto);
@@ -187,7 +193,6 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
         mPhotoTime.setText("拍摄于: " +
                 mResult.getCreated_at().split("T")[0]);
 
-        mPresenter.getPhotoData(mResult.getId());
     }
 
     @Override

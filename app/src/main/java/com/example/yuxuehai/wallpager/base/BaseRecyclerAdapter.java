@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.example.yuxuehai.wallpager.interfaces.OnLoadMoreListener;
+import com.example.yuxuehai.wallpager.ui.interfaces.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;

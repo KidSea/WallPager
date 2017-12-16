@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 26
@@ -7,9 +8,6 @@ android {
         applicationId "com.example.yuxuehai.wallpager"
         minSdkVersion 22
         targetSdkVersion 26
-        jackOptions{
-            enabled true
-        }
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
