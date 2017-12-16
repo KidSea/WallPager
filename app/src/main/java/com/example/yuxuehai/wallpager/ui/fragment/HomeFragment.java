@@ -7,9 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.yuxuehai.wallpager.R;
-import com.example.yuxuehai.wallpager.adapter.HomePagerAdapter;
 import com.example.yuxuehai.wallpager.base.BaseFragment;
-import com.example.yuxuehai.wallpager.ui.MainActivity;
+import com.example.yuxuehai.wallpager.ui.adapter.HomePagerAdapter;
+import com.example.yuxuehai.wallpager.ui.home.MainActivity;
 
 import butterknife.BindView;
 
@@ -30,13 +30,13 @@ public class HomeFragment extends BaseFragment {
     private HomePagerAdapter mHomePagerAdapter;
 
     @Override
-    public int requestLayout() {
+    public int requestLayoutId() {
         return R.layout.fragment_main_layout;
     }
 
     @Override
-    protected void initView() {
-        super.initView();
+    protected void initView(View view) {
+        super.initView(view);
         mHomePagerAdapter = new HomePagerAdapter(getFragmentManager());
         mHomeViewPager.setAdapter(mHomePagerAdapter);
         mTabLayout.setupWithViewPager(mHomeViewPager);
@@ -45,7 +45,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        FragmentFactory.clearView();
+        FragmentFactory.getFragmentFactory().clearView();
     }
 
     @Override
@@ -56,12 +56,7 @@ public class HomeFragment extends BaseFragment {
         ((MainActivity)getActivity()).setSupportActionBar(mToolbar);
         ((MainActivity)getActivity()).setToolBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.img_slide_menu);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)getActivity()).toggleDrawer();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(view -> ((MainActivity)getActivity()).toggleDrawer());
     }
 
 }

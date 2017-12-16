@@ -11,10 +11,24 @@ import java.util.HashMap;
 
 public class FragmentFactory {
 
-    private static HashMap<Integer, BaseFragment> mFragmentMap = new HashMap<Integer, BaseFragment>();
+    private volatile static FragmentFactory sFragmentFactory;
+
+    public static FragmentFactory getFragmentFactory(){
+
+        if (sFragmentFactory == null){
+            synchronized (FragmentFactory.class){
+                if (sFragmentFactory == null){
+                    sFragmentFactory = new FragmentFactory();
+                }
+            }
+        }
+        return sFragmentFactory;
+    }
+
+    private HashMap<Integer, BaseFragment> mFragmentMap = new HashMap<Integer, BaseFragment>();
 
 
-    public static BaseFragment getFragment(int position){
+    public BaseFragment getFragment(int position){
         BaseFragment fragment = mFragmentMap.get(position);
 
 
@@ -23,28 +37,28 @@ public class FragmentFactory {
 
             switch (position) {
                 case 0:
-                    fragment = new DemoFragment(Constants.CHANNLE_NEW);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_NEW);
                     break;
                 case 1:
-                    fragment = new DemoFragment(Constants.CHANNLE_PICK);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_PICK);
                     break;
                 case 2:
-                    fragment = new DemoFragment(Constants.CHANNLE_ARC);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_ARC);
                     break;
                 case 3:
-                    fragment = new DemoFragment(Constants.CHANNLE_FOOD);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_FOOD);
                     break;
                 case 4:
-                    fragment = new DemoFragment(Constants.CHANNLE_NATURE);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_NATURE);
                     break;
                 case 5:
-                    fragment = new DemoFragment(Constants.CHANNLE_GOOD);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_GOOD);
                     break;
                 case 6:
-                    fragment = new DemoFragment(Constants.CHANNLE_PERSON);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_PERSON);
                     break;
                 case 7:
-                    fragment = new DemoFragment(Constants.CHANNLE_TECH);
+                    fragment = new PhotoDisplayFragment(Constants.CHANNLE_TECH);
                     break;
                 default:
                     break;
@@ -57,7 +71,7 @@ public class FragmentFactory {
         return fragment;
     }
 
-    public static void clearView(){
+    public void clearView(){
         if(mFragmentMap != null){
             mFragmentMap.clear();
             mFragmentMap = null;

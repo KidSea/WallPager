@@ -26,15 +26,17 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(requestLayout(), container, false);
+        View view = inflater.inflate(requestLayoutId(), container, false);
         ButterKnife.bind(this,view);
+        initView(view);
         return  view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initView();
+        //// TODO: 17/12/14
+        loadData();
         initData();
         initListener();
         setActionBar();
@@ -48,17 +50,23 @@ public abstract class BaseFragment extends Fragment{
      * 布局
      * @return
      */
-    protected abstract int requestLayout();
+    protected abstract int requestLayoutId();
 
     /**
      * View需要初始化的
      */
-    protected  void initView(){}
+    protected  void initView(View view){}
 
     /**
      * 初始化数据
      */
     protected void initData(){}
+    /**
+     * 加载数据
+     */
+    protected void loadData(){
+
+    }
     /**
      * 初始化事件监听
      */

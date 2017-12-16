@@ -8,13 +8,12 @@ import android.view.View;
 
 import com.example.yuxuehai.wallpager.R;
 import com.example.yuxuehai.wallpager.WallPagerApplications;
-import com.example.yuxuehai.wallpager.base.BasePresenter;
-import com.example.yuxuehai.wallpager.bean.PhotoInfo;
-import com.example.yuxuehai.wallpager.model.NetModel;
-import com.example.yuxuehai.wallpager.presenter.dao.PhotoPresenterDao;
+import com.example.yuxuehai.wallpager.base.RxBasePresenter;
+import com.example.yuxuehai.wallpager.data.NetModel;
+import com.example.yuxuehai.wallpager.data.bean.PhotoInfo;
+import com.example.yuxuehai.wallpager.ui.view.PhotoView;
 import com.example.yuxuehai.wallpager.utils.Constants;
 import com.example.yuxuehai.wallpager.utils.ScreenUtils;
-import com.example.yuxuehai.wallpager.view.PhotoView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -31,7 +30,7 @@ import rx.schedulers.Schedulers;
  * Created by yuxuehai on 17-12-10.
  */
 
-public class PhotoPresenter extends BasePresenter<PhotoView> implements PhotoPresenterDao {
+public class PhotoPresenter extends RxBasePresenter<PhotoView> {
 
     private NetModel mNetModel;
     private WallpaperManager mWallpaperManager;
@@ -39,13 +38,12 @@ public class PhotoPresenter extends BasePresenter<PhotoView> implements PhotoPre
     public PhotoPresenter(Context context) {
         super(context);
         mNetModel = NetModel.getNetModel();
-        mWallpaperManager = WallpaperManager.getInstance(WallPagerApplications.getInstance());
+        mWallpaperManager = WallpaperManager.getInstance(WallPagerApplications.getContext());
     }
 
 
-    @Override
     public void getPhotoData(String id) {
-        mNetModel.getHttpHelper().getPhotoInfo(id, Constants.UNSPLASH_APP_KEY)
+        mSubscriptions.add(mNetModel.getHttpHelper().getPhotoInfo(id, Constants.UNSPLASH_APP_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PhotoInfo>() {
@@ -71,10 +69,9 @@ public class PhotoPresenter extends BasePresenter<PhotoView> implements PhotoPre
                         }
 
                     }
-                });
+                }));
     }
 
-    @Override
     public void disPatchClickEvent(View view) {
         int id = view.getId();
 
@@ -94,10 +91,9 @@ public class PhotoPresenter extends BasePresenter<PhotoView> implements PhotoPre
         }
     }
 
-    @Override
     public void setWallPager(final String raw) {
         getView().showDialog();
-        Observable.create(new Observable.OnSubscribe<Integer>() {
+        mSubscriptions.add(Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
             public void call(Subscriber<? super Integer> subscriber) {
                 Integer response = getWallPhoto(raw);
@@ -119,7 +115,7 @@ public class PhotoPresenter extends BasePresenter<PhotoView> implements PhotoPre
                                 break;
                         }
                     }
-                });
+                }));
     }
 
     private Integer getWallPhoto(String raw){
@@ -144,8 +140,8 @@ public class PhotoPresenter extends BasePresenter<PhotoView> implements PhotoPre
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
                 BitmapFactory.decodeByteArray(bos.toByteArray(),0,bos.toByteArray().length,options);
-                int reqWidth = ScreenUtils.getScreenWidth(WallPagerApplications.getInstance());
-                int reqHeight = ScreenUtils.getScreenHeight(WallPagerApplications.getInstance());
+                int reqWidth = ScreenUtils.getScreenWidth(WallPagerApplications.getContext());
+                int reqHeight = ScreenUtils.getScreenHeight(WallPagerApplications.getContext());
                 int rawWidth = options.outWidth;
                 int rawHeight = options.outHeight;
                 int size = 1;

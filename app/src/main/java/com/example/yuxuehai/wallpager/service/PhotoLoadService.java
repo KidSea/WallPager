@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.yuxuehai.wallpager.WallPagerApplications;
-import com.example.yuxuehai.wallpager.interfaces.LoadPhotoEvent;
+import com.example.yuxuehai.wallpager.ui.interfaces.LoadPhotoEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -121,13 +121,13 @@ public class PhotoLoadService extends IntentService {
         }
         // 其次把文件插入到系统图库
         try {
-            MediaStore.Images.Media.insertImage(WallPagerApplications.getInstance().getContentResolver(),
+            MediaStore.Images.Media.insertImage(WallPagerApplications.getContext().getContentResolver(),
                     file.getAbsolutePath(), file.getName(), null);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         // 最后通知图库更新
-        WallPagerApplications.getInstance().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + photoDir.getAbsolutePath())));
+        WallPagerApplications.getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + photoDir.getAbsolutePath())));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

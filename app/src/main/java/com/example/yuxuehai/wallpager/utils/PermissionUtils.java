@@ -31,7 +31,7 @@ public class PermissionUtils {
 
     // 判断是否缺少权限
     public static boolean lacksPermission(String permission) {
-        return ContextCompat.checkSelfPermission(WallPagerApplications.getInstance(), permission) !=
+        return ContextCompat.checkSelfPermission(WallPagerApplications.getContext(), permission) !=
                 PackageManager.PERMISSION_GRANTED;
     }
     // 含有全部的权限

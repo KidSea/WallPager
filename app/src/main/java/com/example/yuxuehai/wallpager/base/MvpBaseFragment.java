@@ -37,7 +37,7 @@ public abstract class MvpBaseFragment<V,T extends BasePresenter<V>> extends Base
         }
     }
 
-    protected abstract int requestLayout();
+    protected abstract int requestLayoutId();
     protected abstract T createPresenter();
 
 }
