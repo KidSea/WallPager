@@ -31,7 +31,7 @@ public class NetModel{
 
     public NetModel(){
         //获取api类
-        mHttpHelper = new HttpHelperImpl(HttpManage.getHttpUtils().getWallPagerApis());
+        mHttpHelper = new HttpHelperImpl(HttpManage.getHttpManage().getWallPagerApis());
     }
 
 

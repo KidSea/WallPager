@@ -26,7 +26,7 @@ public class HttpManage {
     private static final int WRITE_TIME_OUT = 20;
     private static final int CONNECT_TIME_OUT = 10;
 
-    public static HttpManage getHttpUtils() {
+    public static HttpManage getHttpManage() {
         return sHttpUtils;
     }
 

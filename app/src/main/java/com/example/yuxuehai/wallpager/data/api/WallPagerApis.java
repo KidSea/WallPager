@@ -6,6 +6,7 @@ import com.example.yuxuehai.wallpager.data.bean.UnsplashResult;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -54,7 +55,8 @@ public interface WallPagerApis {
     //照片的信息 https://api.unsplash.com/photos/oCbrjDECdK0?client_id=eb54e3b9dc12b9e0862b028b646085355d20b3442fbdfca4633ca0f7b01ef9a6
     @GET("photos/{id}")
     Observable<PhotoInfo> getPhotoInfo(@Path("id") String id, @Query("client_id") String clientId);
+
     //下载图片api
     @GET
-    Observable<ResponseBody> downloadPicFromNet(@Url String url);
+    Call<ResponseBody> downloadPicFromNet(@Url String url);
 }

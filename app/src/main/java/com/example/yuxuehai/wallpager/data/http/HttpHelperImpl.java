@@ -7,6 +7,7 @@ import com.example.yuxuehai.wallpager.data.bean.UnsplashResult;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import rx.Observable;
 
 /**
@@ -58,7 +59,13 @@ public class HttpHelperImpl{
         return mWallPagerApis.getPhotoInfo(id, clienId);
     }
 
-    public Observable<ResponseBody> downloadPicFromNet(String url){
+    private Call<ResponseBody> downloadPicFromNet(String url){
         return mWallPagerApis.downloadPicFromNet(url);
+    }
+
+    public void  downloadPicFromNet(String url, DownLoadCallback callback){
+        Call<ResponseBody> call = downloadPicFromNet(url);
+        call.enqueue(callback);
+
     }
 }
