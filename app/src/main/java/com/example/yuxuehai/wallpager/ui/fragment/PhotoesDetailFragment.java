@@ -207,7 +207,7 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
                 .alpha(1)
                 .setDuration(300)
                 .start();
-        mProgressBar.setProgress(event.getProgress());
+        mProgressBar.setProgress((int) event.getProgress());
         if (event.getProgress() == 100) {
             mProgressBar.animate()
                     .alpha(0)

@@ -3,6 +3,7 @@ package com.example.yuxuehai.wallpager.data.cache;
 import android.support.annotation.NonNull;
 
 import com.example.yuxuehai.wallpager.WallPagerApplications;
+import com.example.yuxuehai.wallpager.data.http.DownloadProgressResponseBody;
 import com.example.yuxuehai.wallpager.utils.NetUtils;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class CacheInterceptor implements Interceptor {
             int maxAge = 10;
             String cacheControl = request.cacheControl().toString();
             return response.newBuilder()
+                    .body(new DownloadProgressResponseBody(response.body()))
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
                     .header("Cache-Control", "public, max-age=" + maxAge)
@@ -39,6 +41,7 @@ public class CacheInterceptor implements Interceptor {
 //            int maxStale = 60;
             int maxStale = 60 * 60 * 24 * 3;
             return response.newBuilder()
+                    .body(new DownloadProgressResponseBody(response.body()))
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
                     .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)

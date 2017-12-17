@@ -6,7 +6,7 @@ package com.example.yuxuehai.wallpager.ui.interfaces;
 
 public class LoadPhotoEvent {
 
-    private int progress;
+    private long progress;
     private String photoId;
     private String message;
 
@@ -27,11 +27,11 @@ public class LoadPhotoEvent {
         this.photoId = photoId;
     }
 
-    public int getProgress() {
+    public long getProgress() {
         return progress;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(long progress) {
         this.progress = progress;
     }
 

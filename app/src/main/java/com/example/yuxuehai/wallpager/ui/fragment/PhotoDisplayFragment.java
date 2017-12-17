@@ -161,7 +161,7 @@ public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplay
         mAdapter.setOnLoadMoreListener(isReload -> mPresenter.requestDatas(mChannel, ++mPage));
         mAdapter.setOnItemClickListener((position, data, view1) -> getIntoPhotoesDetail(position, (UnsplashResult)data, view1));
         mRecyclerView.addOnScrollListener(mDetector);
-        mRecyclerView.setItemViewCacheSize(100);
+//        mRecyclerView.setItemViewCacheSize(100);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setHasFixedSize(true);
