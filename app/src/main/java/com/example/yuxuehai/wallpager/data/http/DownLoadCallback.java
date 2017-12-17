@@ -45,14 +45,22 @@ public abstract class DownLoadCallback implements Callback<ResponseBody> {
         unsubscribe();
     }
 
+    public void onFail(String error){
+
+    }
+
     public abstract void progress(long progress, long total);
 
     @Override
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-        try {
-            saveFile(response);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (response.code() == 200) {
+            try {
+                saveFile(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (response.code() == 400) {
+            onFail("error");
         }
     }
 
@@ -108,6 +116,11 @@ public abstract class DownLoadCallback implements Callback<ResponseBody> {
                     @Override
                     public void call(DownLoadEvent fileLoadEvent) {
                         progress(fileLoadEvent.getBytesRead(), fileLoadEvent.getTotalLength());
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        onFail("error");
                     }
                 }));
     }
