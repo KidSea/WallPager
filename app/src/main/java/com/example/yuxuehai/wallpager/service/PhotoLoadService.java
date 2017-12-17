@@ -52,24 +52,24 @@ public class PhotoLoadService extends IntentService {
     public void onHandleIntent(Intent intent) {
         String photoLoadUrl = null;
         String photoId = null;
-       if (intent != null) {
-           photoLoadUrl = intent.getStringExtra(PHOTO_LOAD_URL);
-           photoId = intent.getStringExtra(PHOTO_ID);
-       }
-        File file = new File(Environment.getExternalStorageDirectory()+"/WallPager/"+photoId+".jpg");
-        if (file.exists()){
+        if (intent != null) {
+            photoLoadUrl = intent.getStringExtra(PHOTO_LOAD_URL);
+            photoId = intent.getStringExtra(PHOTO_ID);
+        }
+        File file = new File(Environment.getExternalStorageDirectory() + "/WallPager/" + photoId + ".jpg");
+        if (file.exists()) {
             mLoadPhotoEvent.setPhotoId("exist");
             EventBus.getDefault().post(mLoadPhotoEvent);//发送事件,图片文件已存在
             return;
         }
-        String dir = Environment.getExternalStorageDirectory()+"/WallPager/";
-        String name = photoId+".jpg";
+        String dir = Environment.getExternalStorageDirectory() + "/WallPager/";
+        String name = photoId + ".jpg";
         String finalPhotoId = photoId;
         Log.e(TAG, photoLoadUrl);
         mNetModel.getHttpHelper().downloadPicFromNet(photoLoadUrl, new DownLoadCallback(dir, name) {
             @Override
             public void progress(long progress, long total) {
-                Log.e(TAG, "Progress " + progress +" "+ total);
+                Log.e(TAG, "Progress " + progress + " " + total);
                 mLoadPhotoEvent.setProgress(progress * 100 / total);
                 mLoadPhotoEvent.setPhotoId(finalPhotoId);
                 EventBus.getDefault().postSticky(mLoadPhotoEvent);//发送事件,更新UI
@@ -86,6 +86,14 @@ public class PhotoLoadService extends IntentService {
             }
 
             @Override
+            public void onFail(String error) {
+                super.onFail(error);
+                Log.e(TAG, "Error");
+                mLoadPhotoEvent.setMessage("error");
+                EventBus.getDefault().post(mLoadPhotoEvent);
+            }
+
+            @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e(TAG, "Error");
                 mLoadPhotoEvent.setMessage("error");
@@ -95,7 +103,7 @@ public class PhotoLoadService extends IntentService {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void doNothing(LoadPhotoEvent event){
+    public void doNothing(LoadPhotoEvent event) {
 
     }
 }
