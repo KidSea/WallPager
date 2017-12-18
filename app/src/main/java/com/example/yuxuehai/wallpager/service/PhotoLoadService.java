@@ -8,17 +8,16 @@ import android.util.Log;
 
 import com.example.yuxuehai.wallpager.WallPagerApplications;
 import com.example.yuxuehai.wallpager.data.NetModel;
-import com.example.yuxuehai.wallpager.data.http.DownLoadCallback;
+import com.example.yuxuehai.wallpager.data.net.DownLoadCallback;
 import com.example.yuxuehai.wallpager.ui.interfaces.LoadPhotoEvent;
+import com.example.yuxuehai.wallpager.utils.Constants;
+import com.example.yuxuehai.wallpager.utils.SharePrefUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 
 import static com.example.yuxuehai.wallpager.utils.Constants.PHOTO_ID;
 import static com.example.yuxuehai.wallpager.utils.Constants.PHOTO_LOAD_URL;
@@ -67,9 +66,16 @@ public class PhotoLoadService extends IntentService {
         String finalPhotoId = photoId;
         Log.e(TAG, photoLoadUrl);
         mNetModel.getHttpHelper().downloadPicFromNet(photoLoadUrl, new DownLoadCallback(dir, name) {
+
+            @Override
+            protected void beforeProgress() {
+                super.beforeProgress();
+                SharePrefUtil.setBoolean(WallPagerApplications.getContext(), Constants.IS_RUNNING, true);
+            }
+
             @Override
             public void progress(long progress, long total) {
-                Log.e(TAG, "Progress " + progress + " " + total);
+                //Log.e(TAG, "Progress " + progress + " " + total);
                 mLoadPhotoEvent.setProgress(progress * 100 / total);
                 mLoadPhotoEvent.setPhotoId(finalPhotoId);
                 EventBus.getDefault().postSticky(mLoadPhotoEvent);//发送事件,更新UI
@@ -79,6 +85,7 @@ public class PhotoLoadService extends IntentService {
             public void onSuccess(File file) {
                 super.onSuccess(file);
                 Log.e(TAG, "Success");
+                SharePrefUtil.setBoolean(WallPagerApplications.getContext(), Constants.IS_RUNNING, false);
                 // 最后通知图库更新
                 WallPagerApplications.getContext().sendBroadcast(new Intent(Intent
                         .ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" +
@@ -89,13 +96,7 @@ public class PhotoLoadService extends IntentService {
             public void onFail(String error) {
                 super.onFail(error);
                 Log.e(TAG, "Error");
-                mLoadPhotoEvent.setMessage("error");
-                EventBus.getDefault().post(mLoadPhotoEvent);
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e(TAG, "Error");
+                SharePrefUtil.setBoolean(WallPagerApplications.getContext(), Constants.IS_RUNNING, false);
                 mLoadPhotoEvent.setMessage("error");
                 EventBus.getDefault().post(mLoadPhotoEvent);
             }

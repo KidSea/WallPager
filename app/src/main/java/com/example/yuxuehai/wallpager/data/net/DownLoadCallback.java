@@ -1,4 +1,4 @@
-package com.example.yuxuehai.wallpager.data.http;
+package com.example.yuxuehai.wallpager.data.net;
 
 import com.example.yuxuehai.wallpager.base.RxBus;
 
@@ -64,6 +64,11 @@ public abstract class DownLoadCallback implements Callback<ResponseBody> {
         }
     }
 
+    @Override
+    public void onFailure(Call<ResponseBody> call, Throwable t) {
+        onFail("error");
+    }
+
     /**
      * 保存
      *
@@ -107,6 +112,7 @@ public abstract class DownLoadCallback implements Callback<ResponseBody> {
      */
 //    @Subscribe(threadMode = ThreadMode.ASYNC, sticky = true)
     private void subscribeLoadProgress() {
+        beforeProgress();
         rxSubscriptions.add(RxBus.getDefault()
                 .toObservable(DownLoadEvent.class)
                 .onBackpressureBuffer()
@@ -123,6 +129,10 @@ public abstract class DownLoadCallback implements Callback<ResponseBody> {
                         onFail("error");
                     }
                 }));
+    }
+
+    protected void beforeProgress() {
+
     }
 
     /**

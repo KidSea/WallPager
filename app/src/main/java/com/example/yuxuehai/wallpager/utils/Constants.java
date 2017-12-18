@@ -13,10 +13,11 @@ public class Constants {
     public static final String PATH_DATA = WallPagerApplications.getContext().getCacheDir().
             getAbsolutePath() + File.separator + "data";
     public static final String PATH_CACHE = PATH_DATA + "/NetCache";
+    //api
     public static final String UNSPLASH_MAIN_URL = "https://api.unsplash.com/";
     public static final String UNSPLASH_APP_KEY = "7c49a7f1505fe73ccb156537d0540524a85cf596c977e6350c6e26298cb4b6f8";
     public static final String ORDER_BY_LATEST = "latest";//最新的
-
+    //channel
     public static final String CHANNLE_NEW = "new";
     public static final String CHANNLE_PICK = "pick";
     public static final String CHANNLE_ARC = "arc";
@@ -30,6 +31,8 @@ public class Constants {
     public static final String PHOTO_LOAD_URL = "photo_load_url";
     public static final String PHOTO_ID = "photo_id";
 
+    //下载标志
+    public static final String IS_RUNNING = "isrunning";
 
     public static final String UNSPLASH_RESULT = "unsplash_result";
 

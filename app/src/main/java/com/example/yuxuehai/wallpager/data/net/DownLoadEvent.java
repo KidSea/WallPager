@@ -1,4 +1,4 @@
-package com.example.yuxuehai.wallpager.data.http;
+package com.example.yuxuehai.wallpager.data.net;
 
 /**
  * Created by yuxuehai on 17-12-17.

@@ -22,4 +22,10 @@
     <string name="string_share">分享</string>
     <string name="string_set_wallpager">设为壁纸</string>
     <string name="string_photo_value">照片属性</string>
+    <string name="about_content">     Wall Pager高清壁纸来自Unsplash，可以下载精美图片，将精彩图片设置为手机壁纸，或者使用侧边导航中的“壁纸设置（本地）”功能将手机相册中的精美图片设置成手机壁纸，也可以设置手机的锁屏壁纸。</string>
+    <string name="about_copyright">版权所有 @LeslieYu</string>
+    <string name="about_github">github地址: https://github.com/KidSea/WallPager</string>
+    <string name="about_reference">源项目: http://www.apkbus.com/thread-274119-1-1.html</string>
+    <string name="about_title">关于</string>
+
 </resources>

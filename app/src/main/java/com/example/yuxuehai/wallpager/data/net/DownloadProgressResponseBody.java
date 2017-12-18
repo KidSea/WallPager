@@ -1,4 +1,4 @@
-package com.example.yuxuehai.wallpager.data.http;
+package com.example.yuxuehai.wallpager.data.net;
 
 import android.support.annotation.Nullable;
 

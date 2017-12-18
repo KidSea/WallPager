@@ -25,15 +25,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         return this;
     }
 
-    protected abstract int requestLayout();
+    protected abstract int requestLayoutId();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         onBeforeSetContentView();
-        if(requestLayout() != 0) {
-            setContentView(requestLayout());
+        if(requestLayoutId() != 0) {
+            setContentView(requestLayoutId());
         }
         ButterKnife.bind(this);
         initView();

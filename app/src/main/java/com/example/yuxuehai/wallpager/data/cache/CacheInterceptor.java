@@ -3,7 +3,7 @@ package com.example.yuxuehai.wallpager.data.cache;
 import android.support.annotation.NonNull;
 
 import com.example.yuxuehai.wallpager.WallPagerApplications;
-import com.example.yuxuehai.wallpager.data.http.DownloadProgressResponseBody;
+import com.example.yuxuehai.wallpager.data.net.DownloadProgressResponseBody;
 import com.example.yuxuehai.wallpager.utils.NetUtils;
 
 import java.io.IOException;
