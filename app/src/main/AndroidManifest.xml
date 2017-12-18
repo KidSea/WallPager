@@ -40,6 +40,8 @@
         <activity android:screenOrientation="portrait"
                   android:launchMode="singleTop"
                   android:name=".ui.photo.PhotoesDetailAcitivity"/>
+        <activity android:name=".ui.about.AboutActivity"
+                  android:screenOrientation="portrait"/>
 
         <service android:name=".service.PhotoLoadService">
             <intent-filter>

@@ -1,5 +1,6 @@
 package com.example.yuxuehai.wallpager.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.yuxuehai.wallpager.R;
 import com.example.yuxuehai.wallpager.base.BaseActivity;
+import com.example.yuxuehai.wallpager.ui.about.AboutActivity;
 import com.example.yuxuehai.wallpager.ui.fragment.HomeFragment;
 import com.example.yuxuehai.wallpager.ui.view.MainView;
 
@@ -76,11 +78,14 @@ public class MainActivity extends BaseActivity implements MainView,
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId()){
             case R.id.drawer_home:
                 //changeFragmentIndex(item,0);
                 return true;
             case R.id.drawer_invoke_system:
+                intent = new Intent(Intent.ACTION_SET_WALLPAPER);
+                startActivity(Intent.createChooser(intent,"选择壁纸"));
                 Toast.makeText(this, "壁纸设置", Toast.LENGTH_SHORT).show();
                 Log.e("mainactivity", "壁纸设置");
                 break;
@@ -92,6 +97,8 @@ public class MainActivity extends BaseActivity implements MainView,
                 break;
             case R.id.drawer_about:
                 Toast.makeText(this, "关于", Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
                 break;
         }
         mDrawerLayout.closeDrawers();
@@ -118,7 +125,7 @@ public class MainActivity extends BaseActivity implements MainView,
     }
 
     @Override
-    protected int requestLayout() {
+    protected int requestLayoutId() {
         return R.layout.activity_main;
     }
 
