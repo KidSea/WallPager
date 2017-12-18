@@ -20,6 +20,7 @@ import com.example.yuxuehai.wallpager.service.PhotoLoadService;
 import com.example.yuxuehai.wallpager.utils.Constants;
 import com.example.yuxuehai.wallpager.utils.GlideUtils;
 import com.example.yuxuehai.wallpager.ui.view.PhotoView;
+import com.example.yuxuehai.wallpager.utils.SharePrefUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,10 +57,17 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
 
     UnsplashResult mResult;
     private MaterialDialog mMaterialDialog;
+    private Boolean isRunning = false;
 
 
     public PhotoesDetailFragment(UnsplashResult result) {
         mResult = result;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isRunning = SharePrefUtil.getBoolean(getContext(), Constants.IS_RUNNING, false);
     }
 
     @Override
@@ -70,6 +78,7 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
             mContainer.removeAllViews();
             mContainer = null;
         }
+        mProgressBar.clearAnimation();
     }
 
     @Override
@@ -141,7 +150,13 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
         intent.setAction(Constants.SERVICE_ACTION);
         intent.putExtra(Constants.PHOTO_LOAD_URL, mResult.getUrls().getRaw());
         intent.putExtra(Constants.PHOTO_ID, mResult.getId());
-        getActivity().startService(intent);
+        if (!isRunning){
+            Log.e(TAG, String.valueOf(isRunning));
+            getActivity().startService(intent);
+        }else {
+            Log.e(TAG, String.valueOf(isRunning));
+            Toast.makeText(getContext(), "已有图片正在下载...", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

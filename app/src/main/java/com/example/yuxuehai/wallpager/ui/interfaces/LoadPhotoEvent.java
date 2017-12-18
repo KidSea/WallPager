@@ -9,7 +9,15 @@ public class LoadPhotoEvent {
     private long progress;
     private String photoId;
     private String message;
+    private boolean isRunning;
 
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
 
     public String getMessage() {
         return message;

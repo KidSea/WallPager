@@ -1,4 +1,4 @@
-package com.example.yuxuehai.wallpager.data.http;
+package com.example.yuxuehai.wallpager.data.net;
 
 import com.example.yuxuehai.wallpager.data.api.WallPagerApis;
 import com.example.yuxuehai.wallpager.data.bean.PhotoInfo;

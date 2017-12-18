@@ -1,7 +1,7 @@
 package com.example.yuxuehai.wallpager.data;
 
-import com.example.yuxuehai.wallpager.data.http.HttpHelperImpl;
-import com.example.yuxuehai.wallpager.data.http.HttpManage;
+import com.example.yuxuehai.wallpager.data.net.HttpHelperImpl;
+import com.example.yuxuehai.wallpager.data.net.HttpManage;
 
 /**
  * Created by yuxuehai on 17-12-2.
