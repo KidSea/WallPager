@@ -19,6 +19,7 @@
 
 https://github.com/DingMouRen/WallPager
 
+> 注：本项目借鉴了其他开源项目，请尊重项目源作者的版权 
 
 ## License
 ```
