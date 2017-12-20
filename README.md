@@ -1,7 +1,8 @@
-![image](https://github.com/KidSea/WallPager/imgs/img3.png)<br>
+![image](/imgs/img3.png)<br>
 
-![image](https://github.com/KidSea/WallPager/imgs/img1.png)<br>
-![image](https://github.com/KidSea/WallPager/imgs/img2.png)<br>
+![image](/imgs/img1.png)<br>
+
+![image](/imgs/img2.png)<br>
 
 ## 简介
 * 图片来自没有版权的Unsplash网站
