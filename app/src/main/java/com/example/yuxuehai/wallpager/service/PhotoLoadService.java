@@ -85,6 +85,8 @@ public class PhotoLoadService extends IntentService {
             public void onSuccess(File file) {
                 super.onSuccess(file);
                 Log.e(TAG, "Success");
+                mLoadPhotoEvent.setMessage("success");
+                EventBus.getDefault().post(mLoadPhotoEvent);
                 SharePrefUtil.setBoolean(WallPagerApplications.getContext(), Constants.IS_RUNNING, false);
                 // 最后通知图库更新
                 WallPagerApplications.getContext().sendBroadcast(new Intent(Intent

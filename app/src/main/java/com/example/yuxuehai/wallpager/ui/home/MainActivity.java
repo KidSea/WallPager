@@ -90,10 +90,10 @@ public class MainActivity extends BaseActivity implements MainView,
                 Log.e("mainactivity", "壁纸设置");
                 break;
             case R.id.drawer_photos_loaded:
-                Toast.makeText(this, "下载管理", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "下载管理,待开发...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.drawer_settings:
-                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "设置，待开发...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.drawer_about:
                 Toast.makeText(this, "关于", Toast.LENGTH_SHORT).show();

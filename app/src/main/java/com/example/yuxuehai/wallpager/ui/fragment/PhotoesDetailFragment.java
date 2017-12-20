@@ -228,7 +228,7 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
                     .alpha(0)
                     .setDuration(800)
                     .start();
-            Toast.makeText(getContext(), event.getPhotoId() + "图片已下载", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), event.getPhotoId() + "图片已下载", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -243,6 +243,12 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
         if (event != null && event.getMessage() != null){
             if(event.getMessage().equals("error")){
                 Toast.makeText(getContext(), "请查看网络", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        if (event != null && event.getMessage() != null){
+            if(event.getMessage().equals("success")){
+                Toast.makeText(getContext(), "图片下载完成", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
