@@ -170,7 +170,12 @@ public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplay
     @Override
     protected void loadData() {
         super.loadData();
-        getData();
+        if (mPresenter.hasNetWork()){
+            getData();
+        }else {
+            mErrorLayout.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
