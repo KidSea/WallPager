@@ -31,7 +31,7 @@ import butterknife.BindView;
  * Created by yuxuehai on 17-12-1.
  */
 
-public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplayPresenter> implements DemoView,View.OnClickListener {
+public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplayPresenter> implements DemoView, View.OnClickListener {
 
     private static final String TAG = PhotoDisplayFragment.class.getSimpleName();
 
@@ -56,7 +56,7 @@ public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplay
     private LinearLayoutManager mLinearLayoutManager;
     private View mDecorView;
 
-    public PhotoDisplayFragment(String channel){
+    public PhotoDisplayFragment(String channel) {
         mChannel = channel;
     }
 
@@ -70,7 +70,6 @@ public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplay
     public void onDestroyView() {
         super.onDestroyView();
         if (mRecyclerView != null) mRecyclerView.removeAllViews();
-
     }
 
     @Override
@@ -159,7 +158,7 @@ public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplay
         mAdapter.setLoadFailedView(loadErrorView);
         mAdapter.setLoadEndView(loadEndView);
         mAdapter.setOnLoadMoreListener(isReload -> mPresenter.requestDatas(mChannel, ++mPage));
-        mAdapter.setOnItemClickListener((position, data, view1) -> getIntoPhotoesDetail(position, (UnsplashResult)data, view1));
+        mAdapter.setOnItemClickListener((position, data, view1) -> getIntoPhotoesDetail(position, (UnsplashResult) data, view1));
         mRecyclerView.addOnScrollListener(mDetector);
 //        mRecyclerView.setItemViewCacheSize(100);
         mRecyclerView.setAdapter(mAdapter);
@@ -170,9 +169,9 @@ public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplay
     @Override
     protected void loadData() {
         super.loadData();
-        if (mPresenter.hasNetWork()){
+        if (mPresenter.hasNetWork()) {
             getData();
-        }else {
+        } else {
             mErrorLayout.setVisibility(View.VISIBLE);
         }
 
@@ -218,14 +217,14 @@ public class PhotoDisplayFragment extends MvpBaseFragment<DemoView, PhotoDisplay
                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
-    private void getIntoPhotoesDetail(int position, UnsplashResult data, View view){
+    private void getIntoPhotoesDetail(int position, UnsplashResult data, View view) {
         Intent intent = new Intent(getContext(), PhotoesDetailAcitivity.class);
         intent.putExtra(Constants.UNSPLASH_RESULT, data);
-        if(Build.VERSION.SDK_INT >= 22){
+        if (Build.VERSION.SDK_INT >= 22) {
             getActivity().startActivity(intent, ActivityOptions
                     .makeSceneTransitionAnimation(getActivity(), view, getActivity()
                             .getResources().getString(R.string.share_photo)).toBundle());
-        }else {
+        } else {
             getActivity().startActivity(intent);
         }
 

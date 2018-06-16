@@ -11,7 +11,7 @@ public abstract class RecyclerViewScrollDetector extends RecyclerView.OnScrollLi
     public abstract void onScrollUp();
 
     public abstract void onScrollDown();
-    
+
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);

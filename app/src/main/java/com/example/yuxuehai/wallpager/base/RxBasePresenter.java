@@ -17,8 +17,8 @@ public class RxBasePresenter<T> extends BasePresenter<T> {
         mSubscriptions = new CompositeSubscription();
     }
 
-    public void unSubscribe(){
-        if (mSubscriptions != null){
+    public void unSubscribe() {
+        if (mSubscriptions != null) {
             mSubscriptions.clear();
         }
     }

@@ -29,7 +29,7 @@ public class PhotoesDetailAcitivity extends BaseActivity {
             getWindow().setSharedElementReenterTransition(new ChangeImageTransform());
         }
         Intent intent = getIntent();
-        if (intent != null){
+        if (intent != null) {
             mResult = (UnsplashResult) intent.getSerializableExtra(Constants.UNSPLASH_RESULT);
         }
     }
@@ -46,7 +46,7 @@ public class PhotoesDetailAcitivity extends BaseActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.container,mPhotoDetailFragment)
+                .replace(R.id.container, mPhotoDetailFragment)
                 .commit();
     }
 

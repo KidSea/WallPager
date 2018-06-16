@@ -54,7 +54,7 @@ public class PhotoPresenter extends RxBasePresenter<PhotoView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null){
+                        if (getView() == null) {
                             return;
                         }
                         getView().showError(e.getMessage());
@@ -62,9 +62,9 @@ public class PhotoPresenter extends RxBasePresenter<PhotoView> {
 
                     @Override
                     public void onNext(PhotoInfo photoInfo) {
-                        if(photoInfo == null){
+                        if (photoInfo == null) {
                             getView().showError("Data Error");
-                        }else {
+                        } else {
                             getView().setPhotoInfo(photoInfo);
                         }
 
@@ -75,7 +75,7 @@ public class PhotoPresenter extends RxBasePresenter<PhotoView> {
     public void disPatchClickEvent(View view) {
         int id = view.getId();
 
-        switch (id){
+        switch (id) {
             case R.id.iv_arrow_back:
                 getView().finish();
                 break;
@@ -104,7 +104,7 @@ public class PhotoPresenter extends RxBasePresenter<PhotoView> {
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        switch (integer){
+                        switch (integer) {
                             case 200:
                                 getView().dismissDialog();
                                 getView().setWallPagerSuccess();
@@ -118,7 +118,7 @@ public class PhotoPresenter extends RxBasePresenter<PhotoView> {
                 }));
     }
 
-    private Integer getWallPhoto(String raw){
+    private Integer getWallPhoto(String raw) {
         try {
             URL url = new URL(raw);
             HttpURLConnection connect = (HttpURLConnection) url.openConnection();
@@ -126,35 +126,35 @@ public class PhotoPresenter extends RxBasePresenter<PhotoView> {
             connect.setDoInput(true);
             connect.connect();
             int code = connect.getResponseCode();
-            if (code == 200){
+            if (code == 200) {
                 InputStream inputStream = connect.getInputStream();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 int length = -1;
                 byte[] buffer = new byte[1024];
-                while((length = inputStream.read(buffer))!= -1){
-                    bos.write(buffer,0,length);
+                while ((length = inputStream.read(buffer)) != -1) {
+                    bos.write(buffer, 0, length);
                 }
                 bos.flush();
                 bos.close();
                 inputStream.close();
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
-                BitmapFactory.decodeByteArray(bos.toByteArray(),0,bos.toByteArray().length,options);
+                BitmapFactory.decodeByteArray(bos.toByteArray(), 0, bos.toByteArray().length, options);
                 int reqWidth = ScreenUtils.getScreenWidth(WallPagerApplications.getContext());
                 int reqHeight = ScreenUtils.getScreenHeight(WallPagerApplications.getContext());
                 int rawWidth = options.outWidth;
                 int rawHeight = options.outHeight;
                 int size = 1;
-                if (rawHeight > reqHeight || rawWidth > reqWidth){
-                    int halfHeight = rawHeight / 2 ;
+                if (rawHeight > reqHeight || rawWidth > reqWidth) {
+                    int halfHeight = rawHeight / 2;
                     int halfWidth = rawWidth / 2;
-                    while ((halfHeight / size) > reqHeight && (halfWidth / size)>reqWidth){
+                    while ((halfHeight / size) > reqHeight && (halfWidth / size) > reqWidth) {
                         size *= 2;
                     }
                 }
                 options.inSampleSize = size;
                 options.inJustDecodeBounds = false;
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bos.toByteArray(),0,bos.toByteArray().length,options);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bos.toByteArray(), 0, bos.toByteArray().length, options);
                 mWallpaperManager.setBitmap(bitmap);
                 return 200;
             }

@@ -8,7 +8,7 @@ import android.view.View;
  * Created by yuxuehai on 17-12-3.
  */
 
-public abstract class MvpBaseFragment<V,T extends BasePresenter<V>> extends BaseFragment {
+public abstract class MvpBaseFragment<V, T extends BasePresenter<V>> extends BaseFragment {
 
 
     protected T mPresenter;
@@ -23,8 +23,8 @@ public abstract class MvpBaseFragment<V,T extends BasePresenter<V>> extends Base
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if(mPresenter != null){
-            mPresenter.attachView((V)this);
+        if (mPresenter != null) {
+            mPresenter.attachView((V) this);
         }
         super.onViewCreated(view, savedInstanceState);
     }
@@ -32,12 +32,13 @@ public abstract class MvpBaseFragment<V,T extends BasePresenter<V>> extends Base
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView();
         }
     }
 
     protected abstract int requestLayoutId();
+
     protected abstract T createPresenter();
 
 }

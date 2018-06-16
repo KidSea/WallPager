@@ -39,7 +39,7 @@ public class UnsplashResult implements Serializable {
     private User user;
     private Urls urls;
     private LinksX links;
-//    private List<?> current_user_collections;
+    //    private List<?> current_user_collections;
     private List<Categories> categories;
 
     public static UnsplashResult objectFromData(String str) {
@@ -301,7 +301,7 @@ public class UnsplashResult implements Serializable {
             this.links = links;
         }
 
-        public static class ProfileImage  implements Serializable {
+        public static class ProfileImage implements Serializable {
             /**
              * small : https://images.unsplash.com/profile-fb-1471253165-7350e1314fde.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32&s=1e06cd2892ca62b5d51b51f79d55e5bd
              * medium : https://images.unsplash.com/profile-fb-1471253165-7350e1314fde.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=64&w=64&s=38cc7f45342357ee168312a25a9cb8fd

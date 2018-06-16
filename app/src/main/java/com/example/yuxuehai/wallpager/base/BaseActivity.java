@@ -31,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onBeforeSetContentView();
-        if(requestLayoutId() != 0) {
+        if (requestLayoutId() != 0) {
             setContentView(requestLayoutId());
         }
         ButterKnife.bind(this);
@@ -49,11 +49,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void onBeforeSetContentView(){
+    protected void onBeforeSetContentView() {
 
     }
 
-    protected void setupActionBar(){
+    protected void setupActionBar() {
 
     }
 }

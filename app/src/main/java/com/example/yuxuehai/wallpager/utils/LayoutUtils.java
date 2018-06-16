@@ -10,7 +10,7 @@ import android.view.View;
 
 public class LayoutUtils {
 
-    public static View inflate(Context context, int layoutId){
+    public static View inflate(Context context, int layoutId) {
         if (layoutId <= 0) {
             return null;
         }

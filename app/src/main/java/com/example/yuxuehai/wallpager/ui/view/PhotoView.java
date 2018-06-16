@@ -7,7 +7,7 @@ import com.example.yuxuehai.wallpager.data.bean.PhotoInfo;
  * Created by yuxuehai on 17-12-10.
  */
 
-public interface PhotoView extends BaseView{
+public interface PhotoView extends BaseView {
     void setPhotoInfo(PhotoInfo photoInfo);
 
     void finish();

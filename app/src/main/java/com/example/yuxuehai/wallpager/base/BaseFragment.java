@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
  * Created by yuxuehai on 17-11-27.
  */
 
-public abstract class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,9 +27,9 @@ public abstract class BaseFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(requestLayoutId(), container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         initView(view);
-        return  view;
+        return view;
     }
 
     @Override
@@ -45,9 +45,12 @@ public abstract class BaseFragment extends Fragment{
     /**
      * 设置布局前的初始化
      */
-    protected void  beforeSetView(){}
+    protected void beforeSetView() {
+    }
+
     /**
      * 布局
+     *
      * @return
      */
     protected abstract int requestLayoutId();
@@ -55,25 +58,32 @@ public abstract class BaseFragment extends Fragment{
     /**
      * View需要初始化的
      */
-    protected  void initView(View view){}
+    protected void initView(View view) {
+    }
 
     /**
      * 初始化数据
      */
-    protected void initData(){}
+    protected void initData() {
+    }
+
     /**
      * 加载数据
      */
-    protected void loadData(){
+    protected void loadData() {
 
     }
+
     /**
      * 初始化事件监听
      */
-    protected void initListener(){}
+    protected void initListener() {
+    }
+
     /**
      * 初始化ActionBar
      */
-    protected void setActionBar(){}
+    protected void setActionBar() {
+    }
 
 }

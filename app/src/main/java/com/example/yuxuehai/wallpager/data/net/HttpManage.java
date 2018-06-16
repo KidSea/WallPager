@@ -32,7 +32,7 @@ public class HttpManage {
 
     private static final HttpManage sHttpUtils = new HttpManage();
 
-    private OkHttpClient createOkHttpClien(OkHttpClient.Builder builder){
+    private OkHttpClient createOkHttpClien(OkHttpClient.Builder builder) {
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
@@ -54,10 +54,10 @@ public class HttpManage {
         return builder.build();
     }
 
-    public WallPagerApis getWallPagerApis(){
+    public WallPagerApis getWallPagerApis() {
         OkHttpClient okHttpClien = createOkHttpClien(new OkHttpClient.Builder());
 
-        return createRetrofit(new Retrofit.Builder(),okHttpClien, Constants.UNSPLASH_MAIN_URL)
+        return createRetrofit(new Retrofit.Builder(), okHttpClien, Constants.UNSPLASH_MAIN_URL)
                 .create(WallPagerApis.class);
     }
 

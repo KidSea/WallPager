@@ -13,11 +13,11 @@ public class FragmentFactory {
 
     private volatile static FragmentFactory sFragmentFactory;
 
-    public static FragmentFactory getFragmentFactory(){
+    public static FragmentFactory getFragmentFactory() {
 
-        if (sFragmentFactory == null){
-            synchronized (FragmentFactory.class){
-                if (sFragmentFactory == null){
+        if (sFragmentFactory == null) {
+            synchronized (FragmentFactory.class) {
+                if (sFragmentFactory == null) {
                     sFragmentFactory = new FragmentFactory();
                 }
             }
@@ -28,7 +28,7 @@ public class FragmentFactory {
     private HashMap<Integer, BaseFragment> mFragmentMap = new HashMap<Integer, BaseFragment>();
 
 
-    public BaseFragment getFragment(int position){
+    public BaseFragment getFragment(int position) {
         BaseFragment fragment = mFragmentMap.get(position);
 
 
@@ -71,8 +71,8 @@ public class FragmentFactory {
         return fragment;
     }
 
-    public void clearView(){
-        if(mFragmentMap != null){
+    public void clearView() {
+        if (mFragmentMap != null) {
             mFragmentMap.clear();
             mFragmentMap = null;
         }

@@ -12,10 +12,11 @@ public class ScreenUtils {
 
     /**
      * 获取屏幕宽度
+     *
      * @param context
      * @return
      */
-    public static int getScreenWidth(Context context){
+    public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();//描述显示器信息的对象
         wm.getDefaultDisplay().getMetrics(outMetrics);
@@ -24,10 +25,11 @@ public class ScreenUtils {
 
     /**
      * 获取屏幕的高度
+     *
      * @param context
      * @return
      */
-    public static int getScreenHeight(Context context){
+    public static int getScreenHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);

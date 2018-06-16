@@ -53,6 +53,7 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
 
     /**
      * 初始化头布局
+     *
      * @param headerView
      */
     public void setHeaderView(View headerView) {
@@ -62,6 +63,7 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
 
     /**
      * 初始化底加载布局
+     *
      * @param loadingView
      */
     public void setLoadingView(View loadingView) {
@@ -123,14 +125,14 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
     }
 
     public List<T> getDatas() {
-       return mDatas;
+        return mDatas;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(mHeaderView == null && mLoadingView == null) return TYPE_NORMAL;
-        if(mHeaderView != null && position == 0) return TYPE_HEADER;
-        if(isFooterView(position)){
+        if (mHeaderView == null && mLoadingView == null) return TYPE_NORMAL;
+        if (mHeaderView != null && position == 0) return TYPE_HEADER;
+        if (isFooterView(position)) {
             return TYPE_FOOTER;
         }
         return TYPE_NORMAL;
@@ -138,15 +140,15 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case TYPE_HEADER:
-                if(mHeaderView != null) return new Holder(mHeaderView);
+                if (mHeaderView != null) return new Holder(mHeaderView);
                 break;
             case TYPE_FOOTER:
                 if (mFooterView == null) {
                     mFooterView = new RelativeLayout(mContext);
                 }
-                if(mLoadingView != null) return new Holder(mFooterView);
+                if (mLoadingView != null) return new Holder(mFooterView);
                 break;
         }
         return onCreate(parent, viewType);
@@ -155,13 +157,14 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if(getItemViewType(position) == TYPE_HEADER || getItemViewType(position) == TYPE_FOOTER) return;
+        if (getItemViewType(position) == TYPE_HEADER || getItemViewType(position) == TYPE_FOOTER)
+            return;
 
         final int pos = getRealPosition(viewHolder);
         final T data = mDatas.get(pos);
-        onBind((D)viewHolder, pos, data);
+        onBind((D) viewHolder, pos, data);
 
-        if(mListener != null) {
+        if (mListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -176,7 +179,7 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
         super.onAttachedToRecyclerView(recyclerView);
 
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-        if(manager instanceof GridLayoutManager) {
+        if (manager instanceof GridLayoutManager) {
             final GridLayoutManager gridManager = ((GridLayoutManager) manager);
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
@@ -194,7 +197,7 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-        if(lp != null
+        if (lp != null
                 && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
             p.setFullSpan(true);
@@ -208,10 +211,10 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        if(mHeaderView != null && mLoadingView != null) {
+        if (mHeaderView != null && mLoadingView != null) {
             return mDatas.size() + 2;
         }
-        if(mHeaderView != null || mLoadingView != null){
+        if (mHeaderView != null || mLoadingView != null) {
             return mDatas.size() + 1;
         }
         return mDatas.size();
@@ -325,6 +328,7 @@ public abstract class BaseRecyclerAdapter<T, D extends RecyclerView.ViewHolder>
     }
 
     public abstract D onCreate(ViewGroup parent, final int viewType);
+
     public abstract void onBind(D viewHolder, int RealPosition, T data);
 
     public static class Holder extends RecyclerView.ViewHolder {

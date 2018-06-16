@@ -45,7 +45,7 @@ public abstract class DownLoadCallback implements Callback<ResponseBody> {
         unsubscribe();
     }
 
-    public void onFail(String error){
+    public void onFail(String error) {
 
     }
 

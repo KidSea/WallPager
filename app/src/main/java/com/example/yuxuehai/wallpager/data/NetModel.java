@@ -7,7 +7,7 @@ import com.example.yuxuehai.wallpager.data.net.HttpManage;
  * Created by yuxuehai on 17-12-2.
  */
 
-public class NetModel{
+public class NetModel {
 
     private volatile static NetModel mNetModel;
 
@@ -17,11 +17,11 @@ public class NetModel{
 
     private HttpHelperImpl mHttpHelper;
 
-    public static NetModel getNetModel(){
+    public static NetModel getNetModel() {
 
-        if (mNetModel == null){
-            synchronized (NetModel.class){
-                if (mNetModel == null){
+        if (mNetModel == null) {
+            synchronized (NetModel.class) {
+                if (mNetModel == null) {
                     mNetModel = new NetModel();
                 }
             }
@@ -29,7 +29,7 @@ public class NetModel{
         return mNetModel;
     }
 
-    public NetModel(){
+    public NetModel() {
         //获取api类
         mHttpHelper = new HttpHelperImpl(HttpManage.getHttpManage().getWallPagerApis());
     }
