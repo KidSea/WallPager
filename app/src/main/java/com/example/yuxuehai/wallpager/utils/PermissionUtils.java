@@ -34,6 +34,7 @@ public class PermissionUtils {
         return ContextCompat.checkSelfPermission(WallPagerApplications.getContext(), permission) !=
                 PackageManager.PERMISSION_GRANTED;
     }
+
     // 含有全部的权限
     public static boolean hasAllPermissionsGranted(int[] grantResults) {
         for (int grantResult : grantResults) {

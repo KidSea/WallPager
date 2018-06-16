@@ -13,7 +13,8 @@ import butterknife.BindView;
 
 public class AboutActivity extends BaseActivity {
 
-    @BindView(R.id.app_toolbar) Toolbar mToolbar;
+    @BindView(R.id.app_toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected int requestLayoutId() {

@@ -64,13 +64,9 @@ public class SplashActivity extends BaseActivity {
         //动态申请权限，Android6.0以上使用
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && lacksPermissions(permissions)) {
             requestPermissions(permissions, REQUEST_CODE);
-        }else {
+        } else {
             goToMain();
         }
-    }
-
-    @Override
-    protected void initData() {
     }
 
     @Override
@@ -87,11 +83,11 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(SplashActivity.this::finish, 1000);
     }
 
-    private void goToMain(){
+    private void goToMain() {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             delayFinish();
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        },1500);
+        }, 1500);
     }
 }

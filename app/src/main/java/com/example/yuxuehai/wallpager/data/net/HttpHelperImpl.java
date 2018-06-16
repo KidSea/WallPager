@@ -14,7 +14,7 @@ import rx.Observable;
  * Created by yuxuehai on 17-12-2.
  */
 
-public class HttpHelperImpl{
+public class HttpHelperImpl {
     //// TODO: 17/12/14
     private WallPagerApis mWallPagerApis;
 
@@ -59,11 +59,11 @@ public class HttpHelperImpl{
         return mWallPagerApis.getPhotoInfo(id, clienId);
     }
 
-    private Call<ResponseBody> downloadPicFromNet(String url){
+    private Call<ResponseBody> downloadPicFromNet(String url) {
         return mWallPagerApis.downloadPicFromNet(url);
     }
 
-    public void  downloadPicFromNet(String url, DownLoadCallback callback){
+    public void downloadPicFromNet(String url, DownLoadCallback callback) {
         Call<ResponseBody> call = downloadPicFromNet(url);
         call.enqueue(callback);
 

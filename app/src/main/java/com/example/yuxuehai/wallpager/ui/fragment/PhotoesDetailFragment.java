@@ -34,25 +34,41 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
-        PhotoPresenter> implements PhotoView ,View.OnClickListener{
+        PhotoPresenter> implements PhotoView, View.OnClickListener {
     private static final String TAG = PhotoesDetailFragment.class.getName();
 
-    @BindView(R.id.container) CoordinatorLayout mContainer;
-    @BindView(R.id.iv_photo) ImageView mPhoto;
-    @BindView(R.id.iv_arrow_back) ImageView mHomeBack;
-    @BindView(R.id.author_photo) CircleImageView mAuthorPhoto;
-    @BindView(R.id.tv_author_name) TextView mAuthorName;
-    @BindView(R.id.tv_time) TextView mPhotoTime;
-    @BindView(R.id.tv_download) TextView mDownLoad;
-    @BindView(R.id.tv_share) TextView mShare;
-    @BindView(R.id.tv_set_wallpager) TextView mSetWallPager;
-    @BindView(R.id.progressbar) ProgressBar mProgressBar;
-    @BindView(R.id.tv_attr_size) TextView mPhotoSize;
-    @BindView(R.id.tv_attr_exposure) TextView mPhotoExposure;//快门
-    @BindView(R.id.tv_attr_aperture) TextView mPhotoAperture;//光圈
-    @BindView(R.id.tv_attr_focal) TextView mPhotoFocal;//焦距
-    @BindView(R.id.tv_attr_model) TextView mPhotoModel;//器材
-    @BindView(R.id.tv_attr_iso) TextView mPhotoIso;//曝光
+    @BindView(R.id.container)
+    CoordinatorLayout mContainer;
+    @BindView(R.id.iv_photo)
+    ImageView mPhoto;
+    @BindView(R.id.iv_arrow_back)
+    ImageView mHomeBack;
+    @BindView(R.id.author_photo)
+    CircleImageView mAuthorPhoto;
+    @BindView(R.id.tv_author_name)
+    TextView mAuthorName;
+    @BindView(R.id.tv_time)
+    TextView mPhotoTime;
+    @BindView(R.id.tv_download)
+    TextView mDownLoad;
+    @BindView(R.id.tv_share)
+    TextView mShare;
+    @BindView(R.id.tv_set_wallpager)
+    TextView mSetWallPager;
+    @BindView(R.id.progressbar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.tv_attr_size)
+    TextView mPhotoSize;
+    @BindView(R.id.tv_attr_exposure)
+    TextView mPhotoExposure;//快门
+    @BindView(R.id.tv_attr_aperture)
+    TextView mPhotoAperture;//光圈
+    @BindView(R.id.tv_attr_focal)
+    TextView mPhotoFocal;//焦距
+    @BindView(R.id.tv_attr_model)
+    TextView mPhotoModel;//器材
+    @BindView(R.id.tv_attr_iso)
+    TextView mPhotoIso;//曝光
 
 
     UnsplashResult mResult;
@@ -74,7 +90,7 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if(mContainer != null){
+        if (mContainer != null) {
             mContainer.removeAllViews();
             mContainer = null;
         }
@@ -135,12 +151,12 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
 
     @Override
     public void setWallPagerSuccess() {
-        Toast.makeText(getContext(),"手机壁纸设置成功",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "手机壁纸设置成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void setWallPagerFail() {
-        Toast.makeText(getContext(),"手机壁纸设置失败",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "手机壁纸设置失败", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -150,10 +166,10 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
         intent.setAction(Constants.SERVICE_ACTION);
         intent.putExtra(Constants.PHOTO_LOAD_URL, mResult.getUrls().getRaw());
         intent.putExtra(Constants.PHOTO_ID, mResult.getId());
-        if (!isRunning){
+        if (!isRunning) {
             Log.e(TAG, String.valueOf(isRunning));
             getActivity().startService(intent);
-        }else {
+        } else {
             Log.e(TAG, String.valueOf(isRunning));
             Toast.makeText(getContext(), "已有图片正在下载...", Toast.LENGTH_SHORT).show();
         }
@@ -202,8 +218,8 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
     protected void initData() {
         super.initData();
         GlideUtils.loadImgAutoHeight(getContext(), mResult.getUrls().getRegular(), 0, 0, mPhoto);
-        GlideUtils.loadImgSample(getContext(),mResult.getUser().getProfile_image().getLarge(),0,0
-                ,mAuthorPhoto);
+        GlideUtils.loadImgSample(getContext(), mResult.getUser().getProfile_image().getLarge(), 0, 0
+                , mAuthorPhoto);
         mAuthorName.setText(mResult.getUser().getName());
         mPhotoTime.setText("拍摄于: " +
                 mResult.getCreated_at().split("T")[0]);
@@ -234,20 +250,20 @@ public class PhotoesDetailFragment extends MvpBaseFragment<PhotoView,
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerMessages(LoadPhotoEvent event) {
-        if (event != null && event.getPhotoId() != null){
-            if(event.getPhotoId().equals("exist")){
+        if (event != null && event.getPhotoId() != null) {
+            if (event.getPhotoId().equals("exist")) {
                 Toast.makeText(getContext(), "图片已存在", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
-        if (event != null && event.getMessage() != null){
-            if(event.getMessage().equals("error")){
+        if (event != null && event.getMessage() != null) {
+            if (event.getMessage().equals("error")) {
                 Toast.makeText(getContext(), "请查看网络", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
-        if (event != null && event.getMessage() != null){
-            if(event.getMessage().equals("success")){
+        if (event != null && event.getMessage() != null) {
+            if (event.getMessage().equals("success")) {
                 Toast.makeText(getContext(), "图片下载完成", Toast.LENGTH_SHORT).show();
                 return;
             }

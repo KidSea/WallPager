@@ -43,8 +43,8 @@ public class MainActivity extends BaseActivity implements MainView,
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-            if((System.currentTimeMillis()-exitTime) > 2000){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
@@ -60,10 +60,10 @@ public class MainActivity extends BaseActivity implements MainView,
      * 侧滑菜单开关
      */
     @Override
-    public void toggleDrawer(){
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+    public void toggleDrawer() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
-        }else {
+        } else {
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
     }
@@ -79,13 +79,13 @@ public class MainActivity extends BaseActivity implements MainView,
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Intent intent = null;
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.drawer_home:
                 //changeFragmentIndex(item,0);
                 return true;
             case R.id.drawer_invoke_system:
                 intent = new Intent(Intent.ACTION_SET_WALLPAPER);
-                startActivity(Intent.createChooser(intent,"选择壁纸"));
+                startActivity(Intent.createChooser(intent, "选择壁纸"));
                 Toast.makeText(this, "壁纸设置", Toast.LENGTH_SHORT).show();
                 Log.e("mainactivity", "壁纸设置");
                 break;

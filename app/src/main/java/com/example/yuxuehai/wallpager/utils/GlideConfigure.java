@@ -18,7 +18,7 @@ import com.example.yuxuehai.wallpager.R;
  * Created by yuxuehai on 17-12-6.
  */
 
-public class GlideConfigure implements GlideModule{
+public class GlideConfigure implements GlideModule {
 
     private static final String TAG = "MyGlideModule";
     private int mMemoryCacheSize = (int) Runtime.getRuntime().maxMemory() / 8;
@@ -30,12 +30,12 @@ public class GlideConfigure implements GlideModule{
         MemorySizeCalculator calculator = new MemorySizeCalculator(context);
         int defaultMemoryCacheSize = calculator.getMemoryCacheSize();//返回运行的设备的推荐内存缓存大小（以字节为单位）,16M
         int defaultBitmapPoolSize = calculator.getBitmapPoolSize();//返回运行的设备的推荐位图池大小（以字节为单位）,32M
-        Log.e(TAG,"glide默认的内存缓存大小:"+defaultMemoryCacheSize+" bitmap缓存池大小:"+defaultBitmapPoolSize);
+        Log.e(TAG, "glide默认的内存缓存大小:" + defaultMemoryCacheSize + " bitmap缓存池大小:" + defaultBitmapPoolSize);
         //设置内存缓存大小
         builder.setMemoryCache(new LruResourceCache(mMemoryCacheSize));
         builder.setBitmapPool(new LruBitmapPool(defaultBitmapPoolSize * 2));
         //设置磁盘缓存，缓存到私有缓存中，当卸载app时随之卸载
-        builder.setDiskCache(new InternalCacheDiskCacheFactory(context,"glide",mDiskCacheSize));
+        builder.setDiskCache(new InternalCacheDiskCacheFactory(context, "glide", mDiskCacheSize));
 //        builder.setDiskCache(new ExternalCacheDiskCacheFactory(context,"glide",mDiskCacheSize)); 磁盘缓存设置在sd卡中
         //设置图片的解码格式,默认的就是RGB_565,不带透明度，一个像素占2个字节，ARGB_8888:32位图，有透明度，一个像素占4个字节；ARGB_4444：16位图，有透明度，一个像素占2个字节。
         builder.setDecodeFormat(DecodeFormat.PREFER_RGB_565);

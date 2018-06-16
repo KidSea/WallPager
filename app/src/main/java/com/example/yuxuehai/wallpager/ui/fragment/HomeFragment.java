@@ -53,10 +53,10 @@ public class HomeFragment extends BaseFragment {
         super.setActionBar();
         mToolbar.setTitle(R.string.app_name);
         mToolbar.setTitleTextColor(Color.WHITE);
-        ((MainActivity)getActivity()).setSupportActionBar(mToolbar);
-        ((MainActivity)getActivity()).setToolBar(mToolbar);
+        ((MainActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((MainActivity) getActivity()).setToolBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.img_slide_menu);
-        mToolbar.setNavigationOnClickListener(view -> ((MainActivity)getActivity()).toggleDrawer());
+        mToolbar.setNavigationOnClickListener(view -> ((MainActivity) getActivity()).toggleDrawer());
     }
 
 }

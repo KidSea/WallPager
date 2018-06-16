@@ -23,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, PhotoesRecycleAdapter.PhotoesViewHolder> {
 
-    public PhotoesRecycleAdapter(Context context, boolean loadMore){
+    public PhotoesRecycleAdapter(Context context, boolean loadMore) {
         mContext = context;
         mOpenLoadMore = loadMore;
     }
@@ -40,13 +40,13 @@ public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, P
     public void onBind(PhotoesViewHolder viewHolder, int RealPosition, UnsplashResult data) {
         setAuthorInfor(viewHolder);
 
-        if (viewHolder.mImagePager.getDrawable() != null){
+        if (viewHolder.mImagePager.getDrawable() != null) {
             viewHolder.mImagePager.setImageBitmap(null);
             viewHolder.mImagePager.refreshDrawableState();
         }
 
-        if(data != null){
-            GlideUtils.loadImgSample(mContext,data.getUser().getProfile_image().getMedium()
+        if (data != null) {
+            GlideUtils.loadImgSample(mContext, data.getUser().getProfile_image().getMedium()
                     , R.drawable.user_icon, 0, viewHolder.mAuthorHeader);
             GlideUtils.loadImgAutoHeight(mContext, data.getUrls().getRegular(),
                     R.drawable.imgtest, 0, viewHolder.mImagePager);
@@ -58,28 +58,28 @@ public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, P
     }
 
     private void setAuthorInfor(final PhotoesViewHolder viewHolder) {
-        if(viewHolder.mImagePager.getMeasuredHeight() < 300){
+        if (viewHolder.mImagePager.getMeasuredHeight() < 300) {
             viewHolder.mAuthorInfo.setVisibility(View.INVISIBLE);
             viewHolder.mLikes.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             viewHolder.mAuthorInfo.setVisibility(View.VISIBLE);
             viewHolder.mLikes.setVisibility(View.VISIBLE);
         }
 
         viewHolder.mCantainer.getViewTreeObserver().
                 addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if(viewHolder.mImagePager.getMeasuredHeight() > 300){
-                    viewHolder.mAuthorInfo.setVisibility(View.VISIBLE);
-                    viewHolder.mLikes.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+                    @Override
+                    public void onGlobalLayout() {
+                        if (viewHolder.mImagePager.getMeasuredHeight() > 300) {
+                            viewHolder.mAuthorInfo.setVisibility(View.VISIBLE);
+                            viewHolder.mLikes.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
     }
 
 
-    static class PhotoesViewHolder extends BaseRecyclerAdapter.Holder{
+    static class PhotoesViewHolder extends BaseRecyclerAdapter.Holder {
         private CardView mCantainer;
         private ImageView mImagePager;
         private RelativeLayout mAuthorInfo;
@@ -96,7 +96,7 @@ public class PhotoesRecycleAdapter extends BaseRecyclerAdapter<UnsplashResult, P
             mAuthorHeader = (CircleImageView) itemView.findViewById(R.id.author_header);
             mAuthorName = (TextView) itemView.findViewById(R.id.author_name);
             mAuthorLocation = (TextView) itemView.findViewById(R.id.author_location);
-            mLikes = (TextView)itemView.findViewById(R.id.tv_likes);
+            mLikes = (TextView) itemView.findViewById(R.id.tv_likes);
         }
     }
 }
