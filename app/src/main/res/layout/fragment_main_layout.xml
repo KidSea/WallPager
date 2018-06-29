@@ -35,7 +35,7 @@
                 android:layout_gravity="bottom"
                 app:tabGravity="fill"
                 app:tabIndicatorHeight="@dimen/space_2"
-                app:tabMode="scrollable"
+                app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/title_white"/>
 
